@@ -329,6 +329,590 @@
         margin: 0.5rem;
       }
     }
+
+    /* Football Symbol Section Styles */
+    .football-symbol-section {
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 50%, #166534 100%);
+      padding: 100px 0;
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .animated-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .bg-pattern {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.05) 2px, transparent 2px),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 2px, transparent 2px),
+        radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.05) 2px, transparent 2px);
+      background-size: 100px 100px, 150px 150px, 200px 200px;
+      animation: patternMove 20s linear infinite;
+    }
+
+    @keyframes patternMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
+    }
+
+    .bg-gradient {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.1); }
+    }
+
+    .symbol-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .gradient-text {
+      background: linear-gradient(45deg, #fff, #e0f2fe, #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .feature-item {
+      transition: transform 0.3s ease;
+    }
+
+    .feature-item:hover {
+      transform: translateX(10px);
+    }
+
+    .feature-icon {
+      color: #fff;
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Countdown Timer */
+    .countdown-section {
+      position: relative;
+      z-index: 2;
+    }
+
+    .countdown-timer {
+      flex-wrap: wrap;
+    }
+
+    .timer-box {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      padding: 20px 25px;
+      text-align: center;
+      min-width: 100px;
+      transition: transform 0.3s ease;
+    }
+
+    .timer-box:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .timer-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .timer-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.9);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Football Animation Container */
+    .football-animation-container {
+      position: relative;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    /* Main Football */
+    .football-wrapper {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .football-ball {
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+      border-radius: 50%;
+      position: relative;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        inset -20px -20px 40px rgba(0, 0, 0, 0.1),
+        inset 20px 20px 40px rgba(255, 255, 255, 0.8);
+      animation: footballRotate 8s linear infinite, footballFloat 3s ease-in-out infinite;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .football-ball:hover {
+      transform: scale(1.1);
+      animation-play-state: paused;
+    }
+
+    @keyframes footballRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes footballFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    .football-pattern {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .pentagon {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: 2px solid #000;
+    }
+
+    .pentagon-1 {
+      top: 20%;
+      left: 40%;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 20px solid #000;
+      transform: rotate(0deg);
+    }
+
+    .pentagon-2 {
+      top: 45%;
+      left: 15%;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 20px solid #000;
+      transform: rotate(72deg);
+    }
+
+    .pentagon-3 {
+      top: 45%;
+      right: 15%;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 20px solid #000;
+      transform: rotate(144deg);
+    }
+
+    .pentagon-4 {
+      bottom: 20%;
+      left: 25%;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 20px solid #000;
+      transform: rotate(216deg);
+    }
+
+    .pentagon-5 {
+      bottom: 20%;
+      right: 25%;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 20px solid #000;
+      transform: rotate(288deg);
+    }
+
+    .pentagon-6 {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 20px solid #000;
+    }
+
+    .football-glow {
+      position: absolute;
+      width: 120%;
+      height: 120%;
+      top: -10%;
+      left: -10%;
+      background: radial-gradient(circle, rgba(22, 163, 74, 0.3) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: glowPulse 2s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Floating Mini Footballs */
+    .floating-footballs {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    .mini-football {
+      position: absolute;
+      font-size: 2rem;
+      animation: float 6s ease-in-out infinite;
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+    }
+
+    .mini-1 {
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .mini-2 {
+      top: 20%;
+      right: 15%;
+      animation-delay: 1s;
+    }
+
+    .mini-3 {
+      bottom: 15%;
+      left: 20%;
+      animation-delay: 2s;
+    }
+
+    .mini-4 {
+      bottom: 25%;
+      right: 10%;
+      animation-delay: 3s;
+    }
+
+    .mini-5 {
+      top: 50%;
+      left: 5%;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0.7;
+      }
+      25% {
+        transform: translate(20px, -30px) rotate(90deg);
+        opacity: 1;
+      }
+      50% {
+        transform: translate(-15px, -50px) rotate(180deg);
+        opacity: 0.8;
+      }
+      75% {
+        transform: translate(30px, -20px) rotate(270deg);
+        opacity: 1;
+      }
+    }
+
+    /* Particles */
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: particleFloat 8s ease-in-out infinite;
+    }
+
+    .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 80%; top: 30%; animation-delay: 1s; }
+    .particle:nth-child(3) { left: 20%; top: 70%; animation-delay: 2s; }
+    .particle:nth-child(4) { left: 70%; top: 80%; animation-delay: 3s; }
+    .particle:nth-child(5) { left: 50%; top: 10%; animation-delay: 4s; }
+    .particle:nth-child(6) { left: 30%; top: 90%; animation-delay: 5s; }
+    .particle:nth-child(7) { left: 90%; top: 60%; animation-delay: 6s; }
+    .particle:nth-child(8) { left: 60%; top: 50%; animation-delay: 7s; }
+
+    @keyframes particleFloat {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0;
+      }
+      50% {
+        transform: translate(30px, -50px) scale(1.5);
+        opacity: 1;
+      }
+    }
+
+    /* CTA Circle */
+    .cta-circle {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 150px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: 3px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: ctaPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes ctaPulse {
+      0%, 100% {
+        transform: translateX(-50%) scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+      }
+      50% {
+        transform: translateX(-50%) scale(1.05);
+        box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+      }
+    }
+
+    .cta-text {
+      text-align: center;
+      color: #fff;
+    }
+
+    .cta-main {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .cta-sub {
+      display: block;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .stat-card:hover::before {
+      opacity: 1;
+    }
+
+    .stat-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .football-symbol-section {
+        padding: 60px 0;
+        min-height: auto;
+      }
+
+      .football-animation-container {
+        height: 400px;
+        margin-top: 3rem;
+      }
+
+      .football-ball {
+        width: 150px;
+        height: 150px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .timer-box {
+        min-width: 80px;
+        padding: 15px 20px;
+      }
+
+      .timer-value {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .football-symbol-section {
+        padding: 40px 0;
+      }
+
+      .football-animation-container {
+        height: 350px;
+      }
+
+      .football-ball {
+        width: 120px;
+        height: 120px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .countdown-timer {
+        justify-content: center;
+      }
+
+      .timer-box {
+        min-width: 70px;
+        padding: 12px 15px;
+      }
+
+      .timer-value {
+        font-size: 1.8rem;
+      }
+
+      .cta-circle {
+        width: 120px;
+        height: 120px;
+      }
+
+      .cta-main {
+        font-size: 1.2rem;
+      }
+
+      .cta-sub {
+        font-size: 0.9rem;
+      }
+
+      .mini-football {
+        font-size: 1.5rem;
+      }
+
+      .symbol-content h3 {
+        font-size: 2rem !important;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .football-animation-container {
+        height: 300px;
+      }
+
+      .football-ball {
+        width: 100px;
+        height: 100px;
+      }
+
+      .pentagon-1, .pentagon-2, .pentagon-3, .pentagon-4, .pentagon-5, .pentagon-6 {
+        border-left-width: 10px;
+        border-right-width: 10px;
+        border-bottom-width: 12px;
+      }
+    }
   </style>
 
 </head>
@@ -620,6 +1204,171 @@
       </div>
 
     </section><!-- /Services Section -->
+
+    <!-- Football Symbol Hero Section -->
+    <section id="football-symbol" class="football-symbol-section section position-relative overflow-hidden">
+      
+      <!-- Animated Background -->
+      <div class="animated-background">
+        <div class="bg-pattern"></div>
+        <div class="bg-gradient"></div>
+      </div>
+
+      <div class="container position-relative">
+        
+        <!-- Section Title -->
+        <div class="section-title text-center mb-0" data-aos="fade-up">
+          <h2 class="text-white mb-0">নির্বাচনী প্রতীক</h2>
+          <div class="title-shape mx-auto">
+            <svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 0,10 C 40,0 60,20 100,10 C 140,0 160,20 200,10" fill="none" stroke="currentColor" stroke-width="2" stroke="white"></path>
+            </svg>
+          </div>
+          <p class="text-white-50 mt-3 lead">⚽ ফুটবল - আপনার ভোটের প্রতীক</p>
+        </div>
+
+        <div class="row align-items-center g-5">
+          
+          <!-- Left Content -->
+          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+            <div class="symbol-content">
+              <h3 class="text-white display-4 fw-bold mb-4">
+                ফুটবল প্রতীকে<br>
+                <span class="gradient-text">জয়যুক্ত করুন</span>
+              </h3>
+              <p class="text-white-50 lead mb-4">
+                ১২ ফেব্রুয়ারি ২০২৬ তারিখে অনুষ্ঠিতব্য নির্বাচনে ফুটবল প্রতীকে ভোট দিন। 
+                এলাকার উন্নয়ন, জনগণের কল্যাণ ও সমৃদ্ধির জন্য আপনার ভোটের প্রয়োজন।
+              </p>
+              
+              <div class="feature-list mb-4">
+                <div class="feature-item d-flex align-items-center mb-3">
+                  <div class="feature-icon">
+                    <i class="bi bi-check-circle-fill"></i>
+                  </div>
+                  <span class="text-white ms-3">এলাকার উন্নয়ন ও সমৃদ্ধি</span>
+                </div>
+                <div class="feature-item d-flex align-items-center mb-3">
+                  <div class="feature-icon">
+                    <i class="bi bi-check-circle-fill"></i>
+                  </div>
+                  <span class="text-white ms-3">জনগণের কল্যাণ ও সেবা</span>
+                </div>
+                <div class="feature-item d-flex align-items-center mb-3">
+                  <div class="feature-icon">
+                    <i class="bi bi-check-circle-fill"></i>
+                  </div>
+                  <span class="text-white ms-3">স্বচ্ছতা ও জবাবদিহিতা</span>
+                </div>
+                <div class="feature-item d-flex align-items-center">
+                  <div class="feature-icon">
+                    <i class="bi bi-check-circle-fill"></i>
+                  </div>
+                  <span class="text-white ms-3">প্রতিশ্রুতি রক্ষা</span>
+                </div>
+              </div>
+
+              <div class="countdown-section mt-5">
+                <p class="text-white-50 mb-2">নির্বাচন পর্যন্ত বাকি</p>
+                <div class="countdown-timer d-flex gap-3" id="electionCountdown">
+                  <div class="timer-box">
+                    <div class="timer-value" id="days">--</div>
+                    <div class="timer-label">দিন</div>
+                  </div>
+                  <div class="timer-box">
+                    <div class="timer-value" id="hours">--</div>
+                    <div class="timer-label">ঘণ্টা</div>
+                  </div>
+                  <div class="timer-box">
+                    <div class="timer-value" id="minutes">--</div>
+                    <div class="timer-label">মিনিট</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Content - Football Animation -->
+          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
+            <div class="football-animation-container">
+              <!-- Main Football -->
+              <div class="football-wrapper">
+                <div class="football-ball" id="mainFootball">
+                  <div class="football-pattern">
+                    <div class="pentagon pentagon-1"></div>
+                    <div class="pentagon pentagon-2"></div>
+                    <div class="pentagon pentagon-3"></div>
+                    <div class="pentagon pentagon-4"></div>
+                    <div class="pentagon pentagon-5"></div>
+                    <div class="pentagon pentagon-6"></div>
+                  </div>
+                  <div class="football-glow"></div>
+                </div>
+              </div>
+
+              <!-- Floating Footballs -->
+              <div class="floating-footballs">
+                <div class="mini-football mini-1">⚽</div>
+                <div class="mini-football mini-2">⚽</div>
+                <div class="mini-football mini-3">⚽</div>
+                <div class="mini-football mini-4">⚽</div>
+                <div class="mini-football mini-5">⚽</div>
+              </div>
+
+              <!-- Particle Effects -->
+              <div class="particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+              </div>
+
+              <!-- Call to Action Circle -->
+              <div class="cta-circle">
+                <div class="cta-text">
+                  <span class="cta-main">ভোট দিন</span>
+                  <span class="cta-sub">⚽ ফুটবলে</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom Stats -->
+        <div class="row mt-0 pt-0">
+          <div class="col-12">
+            <div class="stats-grid">
+              <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+                <div class="stat-icon">⚽</div>
+                <div class="stat-number" data-target="100">0</div>
+                <div class="stat-label">নির্বাচনী প্রতীক</div>
+              </div>
+              <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+                <div class="stat-icon">📍</div>
+                <div class="stat-number">১২</div>
+                <div class="stat-label">এলাকা নম্বর</div>
+              </div>
+              <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+                <div class="stat-icon">🗓️</div>
+                <div class="stat-number">২০২৬</div>
+                <div class="stat-label">নির্বাচনের বছর</div>
+              </div>
+              <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
+                <div class="stat-icon">🤝</div>
+                <div class="stat-number" data-target="10000">0</div>
+                <div class="stat-label">জনগণের সেবা</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- /Football Symbol Hero Section -->
 
     <!-- Gallery Section -->
     <section id="gallery" class="gallery section light-background">
@@ -1086,6 +1835,121 @@
         });
       }
     });
+
+    // Football Symbol Section - Countdown Timer
+    function updateCountdown() {
+      const electionDate = new Date('2026-02-12T08:00:00').getTime();
+      const now = new Date().getTime();
+      const distance = electionDate - now;
+
+      if (distance > 0) {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+
+        if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
+        if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
+        if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
+      }
+    }
+
+    // Update countdown every minute
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
+
+    // Animated Number Counter
+    function animateValue(element, start, end, duration) {
+      if (!element) return;
+      
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const value = Math.floor(progress * (end - start) + start);
+        element.textContent = value.toLocaleString('bn-BD');
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.3,
+      rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const statCards = entry.target.querySelectorAll('.stat-card');
+          statCards.forEach((card, index) => {
+            setTimeout(() => {
+              const numberEl = card.querySelector('.stat-number[data-target]');
+              if (numberEl) {
+                const target = parseInt(numberEl.getAttribute('data-target'));
+                animateValue(numberEl, 0, target, 2000);
+              }
+            }, index * 200);
+          });
+          
+          // Animate football on scroll
+          const football = document.getElementById('mainFootball');
+          if (football) {
+            football.style.animationPlayState = 'running';
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe football section
+    const footballSection = document.getElementById('football-symbol');
+    if (footballSection) {
+      observer.observe(footballSection);
+    }
+
+    // Interactive Football Click Effect
+    const mainFootball = document.getElementById('mainFootball');
+    if (mainFootball) {
+      mainFootball.addEventListener('click', function() {
+        this.style.animation = 'none';
+        setTimeout(() => {
+          this.style.animation = 'footballRotate 8s linear infinite, footballFloat 3s ease-in-out infinite';
+        }, 10);
+        
+        // Create ripple effect
+        const ripple = document.createElement('div');
+        ripple.style.position = 'absolute';
+        ripple.style.width = '200px';
+        ripple.style.height = '200px';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+        ripple.style.transform = 'translate(-50%, -50%) scale(0)';
+        ripple.style.top = '50%';
+        ripple.style.left = '50%';
+        ripple.style.animation = 'ripple 0.6s ease-out';
+        this.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+      });
+    }
+
+    // Add ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: translate(-50%, -50%) scale(2);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 
 </body>
