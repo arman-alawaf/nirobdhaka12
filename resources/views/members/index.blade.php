@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('title', 'সদস্য ব্যবস্থাপনা - নিরব')
 

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('title', 'সদস্য ইম্পোর্ট করুন - নিরব')
 
