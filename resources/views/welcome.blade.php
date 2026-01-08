@@ -20,14 +20,14 @@
   <meta name="rating" content="general">
   
   <!-- Canonical URL - Replace with your actual website URL -->
-  <link rel="canonical" href="https://nirobdhaka12.com/">
+  <link rel="canonical" href="https://nirobfordhaka12.com/">
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://nirobdhaka12.com/">
+  <meta property="og:url" content="https://nirobfordhaka12.com/">
   <meta property="og:title" content="সাইফুল আলম নীরব - ঢাকা ১২ এলাকার প্রার্থী | নির্বাচনী প্রতীক: ফুটবল ⚽">
   <meta property="og:description" content="সাইফুল আলম নীরব, ঢাকা ১২ এলাকার প্রার্থী। নির্বাচনী প্রতীক: ফুটবল ⚽। নির্বাচন: ১২ ফেব্রুয়ারি ২০২৬। এলাকার উন্নয়ন, জনগণের কল্যাণ ও সমৃদ্ধির জন্য প্রতিশ্রুতিবদ্ধ।">
-  <meta property="og:image" content="https://nirobdhaka12.com/assets/img/nirobArt.png">
+  <meta property="og:image" content="https://nirobfordhaka12.com/assets/img/nirobArt.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="সাইফুল আলম নীরব - ঢাকা ১২ এলাকার প্রার্থী">
@@ -36,10 +36,10 @@
   
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://nirobdhaka12.com/">
+  <meta name="twitter:url" content="https://nirobfordhaka12.com/">
   <meta name="twitter:title" content="সাইফুল আলম নীরব - ঢাকা ১২ এলাকার প্রার্থী | নির্বাচনী প্রতীক: ফুটবল ⚽">
   <meta name="twitter:description" content="সাইফুল আলম নীরব, ঢাকা ১২ এলাকার প্রার্থী। নির্বাচনী প্রতীক: ফুটবল ⚽। নির্বাচন: ১২ ফেব্রুয়ারি ২০২৬।">
-  <meta name="twitter:image" content="https://nirobdhaka12.com/assets/img/nirobArt.png">
+  <meta name="twitter:image" content="https://nirobfordhaka12.com/assets/img/nirobArt.png">
   <meta name="twitter:image:alt" content="সাইফুল আলম নীরব - ঢাকা ১২ এলাকার প্রার্থী">
   <meta name="twitter:creator" content="@yourtwitterhandle">
   
@@ -53,9 +53,9 @@
   <meta name="application-name" content="সাইফুল আলম নীরব">
   
   <!-- Language Alternates -->
-  <link rel="alternate" hreflang="bn" href="https://nirobdhaka12.com/">
-  <link rel="alternate" hreflang="en" href="https://nirobdhaka12.com/en/">
-  <link rel="alternate" hreflang="x-default" href="https://nirobdhaka12.com/">
+  <link rel="alternate" hreflang="bn" href="https://nirobfordhaka12.com/">
+  <link rel="alternate" hreflang="en" href="https://nirobfordhaka12.com/en/">
+  <link rel="alternate" hreflang="x-default" href="https://nirobfordhaka12.com/">
   
   <!-- DNS Prefetch for Performance -->
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -63,10 +63,10 @@
   <link rel="preconnect" href="https://www.yourwebsite.com">
   
   <!-- Favicons -->
-  <link href="assets/img/nirob.jpg" rel="icon" type="image/jpeg">
-  <link href="assets/img/nirob.jpg" rel="apple-touch-icon" sizes="180x180">
-  <link href="assets/img/nirob.jpg" rel="icon" type="image/jpeg" sizes="32x32">
-  <link href="assets/img/nirob.jpg" rel="icon" type="image/jpeg" sizes="16x16">
+  <link href="assets/img/favicon.png" rel="icon" type="image/jpeg">
+  <link href="assets/img/favicon.png" rel="apple-touch-icon" sizes="180x180">
+  <link href="assets/img/favicon.png" rel="icon" type="image/jpeg" sizes="32x32">
+  <link href="assets/img/favicon.png" rel="icon" type="image/jpeg" sizes="16x16">
   
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -77,8 +77,8 @@
     "alternateName": "Saiful Alom Nirob",
     "jobTitle": "রাজনীতিবিদ",
     "description": "ঢাকা ১২ এলাকার প্রার্থী, নির্বাচনী প্রতীক: ফুটবল ⚽",
-    "url": "https://nirobdhaka12.com/",
-    "image": "https://nirobdhaka12.com/assets/img/nirobArt.png",
+    "url": "https://nirobfordhaka12.com/",
+    "image": "https://nirobfordhaka12.com/assets/img/nirobArt.png",
     "sameAs": [
       "https://www.facebook.com/saifulalam.nirob.33"
     ],
@@ -125,7 +125,7 @@
     "@@context": "https://schema.org",
     "@@type": "WebSite",
     "name": "সাইফুল আলম নীরব - ঢাকা ১২",
-    "url": "https://nirobdhaka12.com/",
+    "url": "https://nirobfordhaka12.com/",
     "description": "ঢাকা ১২ এলাকার প্রার্থী সাইফুল আলম নীরবের অফিসিয়াল ওয়েবসাইট",
     "inLanguage": "bn-BD",
     "publisher": {
@@ -134,7 +134,7 @@
     },
     "potentialAction": {
       "@@type": "SearchAction",
-      "target": "https://nirobdhaka12.com/?s={search_term_string}",
+      "target": "https://nirobfordhaka12.com/?s={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   }
@@ -149,31 +149,31 @@
         "@@type": "ListItem",
         "position": 1,
         "name": "হোম",
-        "item": "https://nirobdhaka12.com/"
+        "item": "https://nirobfordhaka12.com/"
       },
       {
         "@@type": "ListItem",
         "position": 2,
         "name": "সম্পর্কে",
-        "item": "https://nirobdhaka12.com/#about"
+        "item": "https://nirobfordhaka12.com/#about"
       },
       {
         "@@type": "ListItem",
         "position": 3,
         "name": "আমার প্রতিশ্রুতি",
-        "item": "https://nirobdhaka12.com/#services"
+        "item": "https://nirobfordhaka12.com/#services"
       },
       {
         "@@type": "ListItem",
         "position": 4,
         "name": "গ্যালারি",
-        "item": "https://nirobdhaka12.com/#gallery"
+        "item": "https://nirobfordhaka12.com/#gallery"
       },
       {
         "@@type": "ListItem",
         "position": 5,
         "name": "যোগাযোগ",
-        "item": "https://nirobdhaka12.com/#contact"
+        "item": "https://nirobfordhaka12.com/#contact"
       }
     ]
   }
