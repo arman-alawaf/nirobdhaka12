@@ -913,6 +913,169 @@
         border-bottom-width: 12px;
       }
     }
+
+    /* Political Biography Timeline Styles */
+    .political-biography {
+      background: #fff;
+      padding: 3rem 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+      margin-top: 3rem;
+    }
+
+    .section-subtitle h3 {
+      color: #16a34a;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .biography-timeline {
+      position: relative;
+      padding: 2rem 0;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .biography-timeline::before {
+      content: '';
+      position: absolute;
+      left: 30px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, #16a34a 0%, #15803d 100%);
+      border-radius: 2px;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 80px;
+      padding-bottom: 2.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-item:hover {
+      transform: translateX(5px);
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: 20px;
+      top: 5px;
+      width: 20px;
+      height: 20px;
+      background: #16a34a;
+      border: 4px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px #16a34a, 0 2px 10px rgba(22, 163, 74, 0.3);
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-item:hover .timeline-marker {
+      transform: scale(1.2);
+      box-shadow: 0 0 0 3px #16a34a, 0 4px 15px rgba(22, 163, 74, 0.5);
+    }
+
+    .timeline-content {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 10px;
+      border-left: 4px solid #16a34a;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .timeline-item:hover .timeline-content {
+      background: #fff;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      border-left-color: #15803d;
+    }
+
+    .timeline-content h5 {
+      color: #212529;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-year {
+      display: inline-block;
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      color: #fff;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+    }
+
+    .timeline-note {
+      font-style: italic;
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .political-biography {
+        padding: 2rem 1.5rem;
+      }
+
+      .section-subtitle h3 {
+        font-size: 1.5rem;
+      }
+
+      .biography-timeline::before {
+        left: 20px;
+      }
+
+      .timeline-item {
+        padding-left: 60px;
+        padding-bottom: 2rem;
+      }
+
+      .timeline-marker {
+        left: 10px;
+        width: 18px;
+        height: 18px;
+      }
+
+      .timeline-content {
+        padding: 1.2rem;
+      }
+
+      .timeline-content h5 {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .political-biography {
+        padding: 1.5rem 1rem;
+      }
+
+      .biography-timeline {
+        padding: 1.5rem 0;
+      }
+
+      .timeline-item {
+        padding-left: 50px;
+      }
+
+      .timeline-content h5 {
+        font-size: 0.95rem;
+      }
+
+      .timeline-year {
+        font-size: 0.85rem;
+        padding: 0.3rem 0.8rem;
+      }
+    }
   </style>
 
 </head>
@@ -1135,6 +1298,120 @@
             </div>
           </div>
         </div>
+
+        <!-- Political Biography Section -->
+        <div class="row mt-5" data-aos="fade-up" data-aos-delay="400">
+          <div class="col-12">
+            <div class="political-biography">
+              <div class="section-subtitle text-center mb-4">
+                <h3 class="fw-bold mb-3">রাজনৈতিক জীবন বৃত্তান্ত</h3>
+                <p class="lead text-muted">আসন্ন ত্রয়োদশ জাতীয় সংসদ নির্বাচনে ঢাকা-১২ আসনে বিএনপি মনোনিত সংসদ সদস্য প্রার্থী সাইফুল আলম নীরব এর রাজনৈতিক জীবন বৃত্তান্ত</p>
+              </div>
+
+              <div class="biography-timeline">
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h5 class="fw-bold">ঢাকা মহানগর উত্তর বিএনপির সাবেক আহবায়ক</h5>
+                    <span class="timeline-year">২০২৪</span>
+                  </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="150">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h5 class="fw-bold">বাংলাদেশ জাতীয়তাবাদী যুবদল কেন্দ্রীয় নির্বাহী কমিটির সাবেক সভাপতি</h5>
+                    <span class="timeline-year">২০১৭</span>
+                  </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h5 class="fw-bold">বাংলাদেশ জাতীয়তাবাদী যুবদল কেন্দ্রীয় নির্বাহী কমিটির সাবেক সাধারণ সম্পাদক</h5>
+                    <span class="timeline-year">২০১০</span>
+                  </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="250">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h5 class="fw-bold">বাংলাদেশ জাতীয়তাবাদী যুবদল ঢাকা মহানগর উত্তরের সাবেক সাধারণ সম্পাদক</h5>
+                    <span class="timeline-year">২০০৩</span>
+                  </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="300">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h5 class="fw-bold">বৃহত্তর ঢাকা মহানগর উত্তর বিএনপির সাবেক সহ সাধারণ সম্পাদক</h5>
+                    <span class="timeline-year">১৯৯৮</span>
+                    <p class="timeline-note text-muted small mt-1">(খোকা-সালাম ১ম কমিটি)</p>
+                  </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="350">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h5 class="fw-bold">বাংলাদেশ জাতীয়তাবাদী ছাত্রদল কেন্দ্রীয় নির্বাহী কমিটির সাবেক ক্রীড়া সম্পাদক</h5>
+                    <span class="timeline-year">১৯৯৬</span>
+                    <p class="timeline-note text-muted small mt-1">(অ্যানি-সোহেল কমিটি)</p>
+                  </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="400">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h5 class="fw-bold">বাংলাদেশ জাতীয়তাবাদী ছাত্রদল কেন্দ্রীয় কমিটির সদস্য</h5>
+                    <span class="timeline-year">১৯৯৪</span>
+                    <p class="timeline-note text-muted small mt-1">(মিলন-আলম কমিটি)</p>
+                  </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="450">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h5 class="fw-bold">বৃহত্তর ঢাকা মহানগর ছাত্রদলের নির্বাচিত সাবেক সাধারণ সম্পাদক</h5>
+                    <span class="timeline-year">১৯৯৩</span>
+                  </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="500">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h5 class="fw-bold">বৃহত্তর ঢাকা মহানগর ছাত্রদলের সাবেক সিনিয়র যুগ্ম সাধারণ সম্পাদক</h5>
+                    <span class="timeline-year">১৯৮৭</span>
+                  </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="550">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h5 class="fw-bold">বৃহত্তর তেজগাঁও থানা ছাত্রদলের সাবেক সভাপতি</h5>
+                    <span class="timeline-year">১৯৮৯</span>
+                  </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="600">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h5 class="fw-bold">বৃহত্তর তেজগাঁও থানা ছাত্রদলের সাবেক সাধারণ সম্পাদক</h5>
+                    <span class="timeline-year">১৯৮৩</span>
+                  </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="650">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h5 class="fw-bold">বৃহত্তর তেজগাঁও থানা ছাত্রদলের সাবেক ১ম যুগ্ম আহবায়ক</h5>
+                    <span class="timeline-year">১৯৮২</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Political Biography Section -->
 
       </div>
 
