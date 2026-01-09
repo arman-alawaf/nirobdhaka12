@@ -213,12 +213,12 @@
     }
     
     #searchResults {
-      margin-top: 20px;
+      margin-top: 10px;
     }
     
     .loading-spinner {
       text-align: center;
-      padding: 40px 20px;
+      padding: 20px 20px;
     }
     
     .filter-section {
