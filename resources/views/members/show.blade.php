@@ -37,7 +37,7 @@
         </div>
         <div class="detail-row">
             <div class="detail-label">লিঙ্গ:</div>
-            <div class="detail-value">{{ $member->gender == 'male' ? 'পুরুষ' : ($member->gender == 'female' ? 'মহিলা' : ($member->gender ?? 'N/A')) }}</div>
+            <div class="detail-value">{{ $member->gender == 'male' ? 'পুরুষ' : ($member->gender == 'female' ? 'মহিলা' : ($member->gender == 'hijra' ? 'হিজড়া' : ($member->gender ?? 'N/A'))) }}</div>
         </div>
         <div class="detail-row">
             <div class="detail-label">পেশা:</div>

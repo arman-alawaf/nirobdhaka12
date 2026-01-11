@@ -141,9 +141,12 @@ class MembersImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnF
             return 'male';
         } elseif (in_array($gender, ['female', 'f', '2'])) {
             return 'female';
-        } elseif (in_array($gender, ['other', 'o', '3'])) {
+        } elseif (in_array($gender, ['hijra', 'h', '3'])) {
+            return 'hijra';
+        } elseif (in_array($gender, ['other', 'o', '4'])) {
             return 'other';
         }
+
         
         return null;
     }

@@ -74,7 +74,7 @@ class MemberController extends Controller
             'name' => 'required|string|max:255',
             'dob' => 'nullable|date',
             'nid' => 'required|string|max:255|unique:members,nid',
-            'gender' => 'nullable|in:male,female,other',
+            'gender' => 'nullable|in:male,female,hijra,other',
             'fother' => 'nullable|string|max:255',
             'mother' => 'nullable|string|max:255',
             'occupation' => 'nullable|string|max:255',
@@ -119,7 +119,7 @@ class MemberController extends Controller
             'name' => 'required|string|max:255',
             'dob' => 'nullable|date',
             'nid' => 'required|string|max:255|unique:members,nid,' . $member->id,
-            'gender' => 'nullable|in:male,female,other',
+            'gender' => 'nullable|in:male,female,hijra,other',
             'fother' => 'nullable|string|max:255',
             'mother' => 'nullable|string|max:255',
             'occupation' => 'nullable|string|max:255',
@@ -292,7 +292,8 @@ class MemberController extends Controller
         }
 
         // Get results (limit to 100 for modal display)
-        $members = $query->orderBy('id', 'desc')->limit(100)->get();
+        // $members = $query->orderBy('id', 'desc')->limit(100)->get();
+        $members = $query->orderBy('id', 'desc')->get();
 
         // Format data for display
         $formattedMembers = $members->map(function ($member) {
@@ -302,7 +303,7 @@ class MemberController extends Controller
                 'name' => $member->name,
                 'dob' => $member->dob ? $member->dob->format('Y-m-d') : 'N/A',
                 'nid' => $member->nid,
-                'gender' => $member->gender == 'male' ? 'পুরুষ' : ($member->gender == 'female' ? 'মহিলা' : ($member->gender ?? 'N/A')),
+                'gender' => $member->gender == 'male' ? 'পুরুষ' : ($member->gender == 'female' ? 'মহিলা' : ($member->gender == 'hijra' ? 'হিজরা' : ($member->gender ?? 'N/A'))),
                 'fother' => $member->fother ?? 'N/A',
                 'mother' => $member->mother ?? 'N/A',
                 'occupation' => $member->occupation ?? 'N/A',

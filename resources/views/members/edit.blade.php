@@ -54,6 +54,7 @@
                     <option value="">লিঙ্গ নির্বাচন করুন</option>
                     <option value="male" {{ old('gender', $member->gender) == 'male' ? 'selected' : '' }}>পুরুষ</option>
                     <option value="female" {{ old('gender', $member->gender) == 'female' ? 'selected' : '' }}>মহিলা</option>
+                    <option value="hijra" {{ old('gender', $member->gender) == 'hijra' ? 'selected' : '' }}>হিজড়া</option>
                 </select>
                 @error('gender')
                     <div class="error">{{ $message }}</div>

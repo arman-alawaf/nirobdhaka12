@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->date('dob')->nullable();
             $table->string('nid')->unique();
-            $table->enum('gender', ['male', 'female', 'other'])->nullable();
+            $table->enum('gender', ['male', 'female', 'hijra', 'other'])->nullable();
             $table->string('fother')->nullable();
             $table->string('mother')->nullable();
             $table->string('occupation')->nullable();

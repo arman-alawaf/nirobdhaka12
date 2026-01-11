@@ -67,7 +67,7 @@
                         <td>{{ $member->name }}</td>
                         <td>{{ $member->dob ? $member->dob->format('Y-m-d') : 'N/A' }}</td>
                         <td>{{ $member->nid }}</td>
-                        <td>{{ $member->gender == 'male' ? 'পুরুষ' : ($member->gender == 'female' ? 'মহিলা' : ($member->gender ?? 'N/A')) }}</td>
+                        <td>{{ $member->gender == 'male' ? 'পুরুষ' : ($member->gender == 'female' ? 'মহিলা' : ($member->gender == 'hijra' ? 'হিজড়া' : ($member->gender ?? 'N/A'))) }}</td>
                         <td>{{ $member->fother ?? 'N/A' }}</td>
                         <td>{{ $member->mother ?? 'N/A' }}</td>
                         <td>{{ $member->occupation ?? 'N/A' }}</td>
