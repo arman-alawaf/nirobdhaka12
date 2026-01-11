@@ -1088,7 +1088,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title h5 mb-0" id="exampleModalLabel">
-          <i class="bi bi-search me-2"></i>সদস্য খুঁজুন (Search Members)
+          <i class="bi bi-search me-2"></i>কেন্দ্র খুঁজুন (Find Center)
         </h1>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -1149,7 +1149,7 @@
           <li><a href="#services">আমার প্রতিশ্রুতি</a></li>
           <li><a href="#gallery">গ্যালারি</a></li>
           <li><a href="#contact">যোগাযোগ</a></li>
-          <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">সদস্য খুঁজুন</a></li>
+          <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">কেন্দ্র খুঁজুন</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
