@@ -7,7 +7,34 @@
 @section('content')
     <h1>এক্সেল থেকে সদস্য ইম্পোর্ট করুন</h1>
 
-    <div class="import-info">
+
+    <form action="{{ route('members.import.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+
+        <div class="form-group">
+            <label for="file">এক্সেল ফাইল নির্বাচন করুন <span style="color: red;">*</span></label>
+            <input type="file" id="file" name="file" accept=".xlsx,.xls,.csv" required>
+            @error('file')
+                <div class="error">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="update_existing" value="1">
+                এনআইডি মিললে বিদ্যমান সদস্যদের আপডেট করুন (অন্যথায় ডুপ্লিকেট এড়িয়ে যান)
+            </label>
+        </div>
+
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">সদস্য ইম্পোর্ট করুন</button>
+            <a href="{{ route('members.index') }}" class="btn btn-secondary">বাতিল</a>
+            <a href="{{ route('members.export') }}" class="btn btn-info">নমুনা এক্সেল ডাউনলোড করুন</a>
+        </div>
+    </form>
+
+
+    <div class="import-info mt-5">
         <h3>ইম্পোর্ট নির্দেশাবলী:</h3>
         <ol>
             <li>নমুনা এক্সেল ফাইল ডাউনলোড করুন বা ফরম্যাট দেখতে বিদ্যমান সদস্যদের এক্সপোর্ট করুন</li>
@@ -36,29 +63,5 @@
         </ol>
     </div>
 
-    <form action="{{ route('members.import.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-
-        <div class="form-group">
-            <label for="file">এক্সেল ফাইল নির্বাচন করুন <span style="color: red;">*</span></label>
-            <input type="file" id="file" name="file" accept=".xlsx,.xls,.csv" required>
-            @error('file')
-                <div class="error">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="form-group">
-            <label>
-                <input type="checkbox" name="update_existing" value="1">
-                এনআইডি মিললে বিদ্যমান সদস্যদের আপডেট করুন (অন্যথায় ডুপ্লিকেট এড়িয়ে যান)
-            </label>
-        </div>
-
-        <div class="btn-group">
-            <button type="submit" class="btn btn-primary">সদস্য ইম্পোর্ট করুন</button>
-            <a href="{{ route('members.index') }}" class="btn btn-secondary">বাতিল</a>
-            <a href="{{ route('members.export') }}" class="btn btn-info">নমুনা এক্সেল ডাউনলোড করুন</a>
-        </div>
-    </form>
 @endsection
 
