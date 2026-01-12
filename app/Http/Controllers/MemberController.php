@@ -30,6 +30,16 @@ class MemberController extends Controller
             $query->where('name', 'like', '%' . $request->name . '%');
         }
 
+        // Third filter: Area Number
+        if ($request->filled('area_number')) {
+            $query->where('area_number', 'like', '%' . $request->area_number . '%');
+        }
+
+        // Fourth filter: Word
+        if ($request->filled('word')) {
+            $query->where('word', 'like', '%' . $request->word . '%');
+        }
+
         if ($request->filled('gender')) {
             $query->where('gender', $request->gender);
         }

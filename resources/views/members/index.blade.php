@@ -18,7 +18,7 @@
             @endif
         </div>
     </h1>
-<!-- 
+
     <div class="filter-section">
         <form method="GET" action="{{ route('members.index') }}">
             <div class="filter-row">
@@ -30,11 +30,19 @@
                     <label>নাম (Name)</label>
                     <input type="text" name="name" value="{{ request('name') }}" placeholder="নাম লিখুন...">
                 </div>
+                <div class="form-group">
+                    <label>এলাকা নম্বর (Area Number)</label>
+                    <input type="text" name="area_number" value="{{ request('area_number') }}" placeholder="এলাকা নম্বর লিখুন...">
+                </div>
+                <div class="form-group">
+                    <label>ওয়ার্ড (Word)</label>
+                    <input type="text" name="word" value="{{ request('word') }}" placeholder="ওয়ার্ড লিখুন...">
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Filter</button>
             <a href="{{ route('members.index') }}" class="btn btn-info">Reset</a>
         </form>
-    </div> -->
+    </div> 
 
     <div class="table-container">
         <table class="table-responsive">
