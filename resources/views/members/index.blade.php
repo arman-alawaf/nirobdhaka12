@@ -4,9 +4,9 @@
 
 @section('content')
     <h1>
-        <span>সদস্য ব্যবস্থাপনা</span>
+        <span>সদস্য - {{ $members->total() }}</span>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            {{ $members->total() }}
+            
             <a href="{{ route('members.export') }}" class="btn btn-success">এক্সেল এক্সপোর্ট করুন</a>
             <a href="{{ route('members.import') }}" class="btn btn-info">এক্সেল ইম্পোর্ট করুন</a>
             <a href="{{ route('members.create') }}" class="btn btn-primary">নতুন সদস্য যোগ করুন</a>
