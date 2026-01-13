@@ -1139,7 +1139,7 @@
       <a href="{{url('/')}}" class="logo d-flex align-items-center me-auto me-xl-0">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.webp" alt=""> -->
-        <h1 class="sitename fw-bold">সাইফুল আলম নীরব</h1>
+        <h1 class="sitename fw-bold" translate="no">সাইফুল আলম নীরব</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
@@ -1174,7 +1174,7 @@
         <div class="row align-items-center content">
           <div class="col-lg-6 order-md-1 order-2" data-aos="fade-up" data-aos-delay="200">
             <h2>ঢাকা ১২ এলাকার জন্য আপনার বিশ্বস্ত প্রার্থী</h2>
-            <p class="lead">সাইফুল আলম নীরব - উন্নয়ন, সমৃদ্ধি ও জনগণের কল্যাণের জন্য প্রতিশ্রুতিবদ্ধ</p>
+            <p class="lead"> <span translate="no">সাইফুল আলম নীরব</span> - উন্নয়ন, সমৃদ্ধি ও জনগণের কল্যাণের জন্য প্রতিশ্রুতিবদ্ধ</p>
             <div class="cta-buttons" data-aos="fade-up" data-aos-delay="300">
               <a href="#about" class="btn btn-primary">আমার সম্পর্কে</a>
               <a href="#contact" class="btn btn-outline">যোগাযোগ করুন</a>
@@ -1234,7 +1234,7 @@
             <div class="about-content">
               <span class="subtitle">আমার পরিচয়</span>
 
-              <h2>সাইফুল আলম নীরব</h2>
+              <h2 translate="no">সাইফুল আলম নীরব</h2>
 
               <p class="lead mb-4">ঢাকা ১২ এলাকার উন্নয়ন, জনগণের সেবা ও সমৃদ্ধির জন্য আমি নিরলসভাবে কাজ করব। এলাকার প্রতিটি মানুষের কল্যাণই আমার লক্ষ্য।</p>
 
@@ -1245,7 +1245,7 @@
                   <div class="col-6">
                     <div class="info-item">
                       <span class="label">নাম</span>
-                      <span class="value">সাইফুল আলম নীরব</span>
+                      <span class="value" translate="no">সাইফুল আলম নীরব</span>
                     </div>
                   </div>
 
@@ -1291,7 +1291,7 @@
                   <img src="assets/img/misc/signature-1.webp" alt="" class="img-fluid">
                 </div> -->
                 <div class="signature-info">
-                  <h4>সাইফুল আলম নীরব</h4>
+                  <h4 translate="no">সাইফুল আলম নীরব</h4>
                   <p>ঢাকা ১২ এলাকার প্রার্থী</p>
                 </div>
               </div>
@@ -1305,7 +1305,7 @@
             <div class="political-biography">
               <div class="section-subtitle text-center mb-4">
                 <h3 class="fw-bold mb-3">রাজনৈতিক জীবন বৃত্তান্ত</h3>
-                <p class="lead text-muted">আসন্ন ত্রয়োদশ জাতীয় সংসদ নির্বাচনে ঢাকা-১২ আসনে বিএনপি মনোনিত সংসদ সদস্য প্রার্থী সাইফুল আলম নীরব এর রাজনৈতিক জীবন বৃত্তান্ত</p>
+                <p class="lead text-muted">আসন্ন ত্রয়োদশ জাতীয় সংসদ নির্বাচনে ঢাকা-১২ আসনে বিএনপি মনোনিত সংসদ সদস্য প্রার্থী <span translate="no">সাইফুল আলম নীরব</span> এর রাজনৈতিক জীবন বৃত্তান্ত</p>
               </div>
 
               <div class="biography-timeline">
@@ -1936,7 +1936,7 @@
 
     <div class="container">
       <div class="copyright text-center ">
-        <p>© <span>কপিরাইট</span> <strong class="px-1 sitename">সাইফুল আলম নীরব</strong> <span>সর্বস্বত্ব সংরক্ষিত</span></p>
+        <p>© <span>কপিরাইট</span> <strong class="px-1 sitename" translate="no">সাইফুল আলম নীরব</strong> <span>সর্বস্বত্ব সংরক্ষিত</span></p>
       </div>
       <div class="social-links d-flex justify-content-center">
         <a href="https://www.facebook.com/saifulalam.nirob.33" target="_blank"><i class="bi bi-facebook"></i></a>
