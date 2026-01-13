@@ -6,16 +6,17 @@
     <h1>
         <span>সদস্য ব্যবস্থাপনা</span>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            {{ $members->total() }}
             <a href="{{ route('members.export') }}" class="btn btn-success">এক্সেল এক্সপোর্ট করুন</a>
             <a href="{{ route('members.import') }}" class="btn btn-info">এক্সেল ইম্পোর্ট করুন</a>
             <a href="{{ route('members.create') }}" class="btn btn-primary">নতুন সদস্য যোগ করুন</a>
-            @if($members->total() > 0)
+            {{-- @if($members->total() > 0)
                 <form action="{{ route('members.deleteAll') }}" method="POST" style="display: inline;" onsubmit="return confirm('আপনি কি নিশ্চিত যে আপনি সব সদস্য মুছে ফেলতে চান? এই কাজটি পূর্বাবস্থায় ফিরিয়ে আনা যাবে না।');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">সব ডেটা মুছুন ({{ $members->total() }})</button>
                 </form>
-            @endif
+            @endif --}}
         </div>
     </h1>
 

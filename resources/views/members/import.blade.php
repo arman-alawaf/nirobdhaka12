@@ -27,9 +27,22 @@
         </div>
 
         <div class="btn-group">
-            <button type="submit" class="btn btn-primary">সদস্য ইম্পোর্ট করুন</button>
+            <button type="submit" id="importBtn" class="btn btn-primary">সদস্য ইম্পোর্ট করুন</button>
             <a href="{{ route('members.index') }}" class="btn btn-secondary">বাতিল</a>
             <a href="{{ route('members.export') }}" class="btn btn-info">নমুনা এক্সেল ডাউনলোড করুন</a>
+        </div>
+
+        <div id="progressContainer" style="display: none; margin-top: 20px;">
+            <div style="background-color: #f0f0f0; border-radius: 4px; height: 30px; position: relative; overflow: hidden;">
+                <div id="progressBar" style="background-color: #007bff; height: 100%; width: 0%; transition: width 0.3s ease; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;">
+                    <span id="progressText">0%</span>
+                </div>
+            </div>
+            <p id="progressMessage" style="margin-top: 10px; text-align: center; color: #666;">
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                <span style="margin-left: 10px; margin-right: 10px;"> ইম্পোর্ট করা হচ্ছে </span>
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+            </p>
         </div>
     </form>
 
@@ -64,4 +77,44 @@
     </div>
 
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form[enctype="multipart/form-data"]');
+    const importBtn = document.getElementById('importBtn');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const progressMessage = document.getElementById('progressMessage');
+
+    if (form && importBtn) {
+        form.addEventListener('submit', function(e) {
+            // Disable the submit button
+            importBtn.disabled = true;
+            importBtn.textContent = 'ইম্পোর্ট করা হচ্ছে...';
+            importBtn.style.opacity = '0.6';
+            importBtn.style.cursor = 'not-allowed';
+
+            // Show progress container
+            progressContainer.style.display = 'block';
+
+            // Animate progress bar to 100%
+            let progress = 0;
+            const interval = setInterval(function() {
+                progress += 2; // Increment by 2% each interval
+                
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                }
+                
+                progressBar.style.width = progress + '%';
+                progressText.textContent = Math.round(progress) + '%';
+            }, 50); // Update every 50ms for smooth animation (takes ~2.5 seconds to reach 100%)
+        });
+    }
+});
+</script>
+@endpush
 

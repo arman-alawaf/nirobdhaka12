@@ -211,6 +211,10 @@ class MemberController extends Controller
      */
     public function import(Request $request): RedirectResponse
     {
+
+        // set_time_limit(0);
+        // ini_set('memory_limit', '-1');
+
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv|max:10240', // 10MB max
         ]);
