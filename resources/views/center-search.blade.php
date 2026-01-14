@@ -390,6 +390,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
+                    কেন্দ্র 
                     <h5 class="modal-title" id="pdfViewerModalLabel">
                         <i class="bi bi-file-pdf me-2"></i>PDF Viewer
                     </h5>
@@ -433,12 +434,26 @@
         // CSRF Token
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
         
+        // Helper function to escape HTML
+        function escapeHtml(text) {
+            if (!text) return '';
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return String(text).replace(/[&<>"']/g, m => map[m]);
+        }
+        
         // Global variables
         let currentPdf = null;
         let currentPage = 1;
         let pdfDoc = null;
         let scale = 1.0;
         const scaleDelta = 0.2;
+        let pdfListData = []; // Store PDF data with titles
         
         // Load PDF list on page load
         document.addEventListener('DOMContentLoaded', function() {
@@ -463,19 +478,38 @@
                 const container = document.getElementById('pdfListContainer');
                 
                 if (data.success && data.pdfs.length > 0) {
+                    // Store PDF data globally
+                    pdfListData = data.pdfs;
+                    
                     let html = '<div class="pdf-grid">';
                     data.pdfs.forEach(pdf => {
                         const sizeInMB = (pdf.size / (1024 * 1024)).toFixed(2);
+                        const displayTitle = pdf.title && pdf.title !== pdf.name ? pdf.title : pdf.name;
+                        // Use data attributes to avoid escaping issues
                         html += `
-                            <div class="pdf-card" onclick="openPdf('${pdf.path}', '${pdf.name}')">
+                            <div class="pdf-card" 
+                                 data-pdf-path="${escapeHtml(pdf.path)}" 
+                                 data-pdf-name="${escapeHtml(pdf.name)}" 
+                                 data-pdf-title="${escapeHtml(pdf.title || pdf.name)}"
+                                 style="cursor: pointer;">
                                 <i class="bi bi-file-pdf pdf-icon"></i>
-                                <div class="pdf-name">${pdf.name}</div>
+                                <div class="pdf-name">${escapeHtml(displayTitle)}</div>
                                 <div class="pdf-size">${sizeInMB} MB</div>
                             </div>
                         `;
                     });
                     html += '</div>';
                     container.innerHTML = html;
+                    
+                    // Add click event listeners to PDF cards
+                    container.querySelectorAll('.pdf-card').forEach(card => {
+                        card.addEventListener('click', function() {
+                            const path = this.getAttribute('data-pdf-path');
+                            const name = this.getAttribute('data-pdf-name');
+                            const title = this.getAttribute('data-pdf-title');
+                            openPdf(path, name, title);
+                        });
+                    });
                 } else {
                     container.innerHTML = '<div class="no-pdfs">কোন PDF ফাইল পাওয়া যায়নি</div>';
                 }
@@ -494,10 +528,18 @@
             statusDiv.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>অনুসন্ধান করা হচ্ছে... অনুগ্রহ করে অপেক্ষা করুন...';
             
             try {
-                const response = await fetch('{{ route("pdfs.list") }}');
-                const data = await response.json();
+                // Use stored pdfListData or fetch if not available
+                let pdfsToSearch = pdfListData;
+                if (!pdfsToSearch || pdfsToSearch.length === 0) {
+                    const response = await fetch('{{ route("pdfs.list") }}');
+                    const data = await response.json();
+                    if (data.success && data.pdfs) {
+                        pdfsToSearch = data.pdfs;
+                        pdfListData = data.pdfs; // Store for future use
+                    }
+                }
                 
-                if (!data.success || !data.pdfs.length) {
+                if (!pdfsToSearch || pdfsToSearch.length === 0) {
                     statusDiv.className = 'search-status error';
                     statusDiv.innerHTML = '<i class="bi bi-exclamation-triangle me-2"></i>কোন PDF ফাইল পাওয়া যায়নি';
                     return;
@@ -508,9 +550,9 @@
                 const nidPattern = new RegExp(nid.replace(/\s/g, ''), 'i');
                 
                 // Search in each PDF
-                for (let pdfIndex = 0; pdfIndex < data.pdfs.length; pdfIndex++) {
-                    const pdf = data.pdfs[pdfIndex];
-                    statusDiv.innerHTML = `<i class="bi bi-hourglass-split me-2"></i>অনুসন্ধান করা হচ্ছে... (${pdfIndex + 1}/${data.pdfs.length}): ${pdf.name}`;
+                for (let pdfIndex = 0; pdfIndex < pdfsToSearch.length; pdfIndex++) {
+                    const pdf = pdfsToSearch[pdfIndex];
+                    statusDiv.innerHTML = `<i class="bi bi-hourglass-split me-2"></i>অনুসন্ধান করা হচ্ছে... (${pdfIndex + 1}/${pdfsToSearch.length}): ${pdf.name}`;
                     
                     try {
                         const loadingTask = pdfjsLib.getDocument({
@@ -543,12 +585,13 @@
                                 
                                 if (hasSearchText && hasNid) {
                                     found = true;
+                                    const pdfTitle = pdf.title || pdf.name;
                                     statusDiv.className = 'search-status success';
                                     statusDiv.innerHTML = `<i class="bi bi-check-circle me-2"></i>পাওয়া গেছে! PDF: ${pdf.name}, পাতা: ${pageNum}`;
                                     
-                                    // Open PDF at the found page
+                                    // Open PDF at the found page with title
                                     setTimeout(() => {
-                                        openPdfAtPage(pdf.path, pdf.name, pageNum);
+                                        openPdfAtPage(pdf.path, pdf.name, pageNum, pdfTitle);
                                     }, 500);
                                     
                                     return; // Stop searching
@@ -575,22 +618,40 @@
         }
         
         // Open PDF in modal
-        function openPdf(pdfPath, pdfName) {
-            openPdfAtPage(pdfPath, pdfName, 1);
+        function openPdf(pdfPath, pdfName, pdfTitle = null) {
+            // If title not provided, try to find it from pdfListData
+            if (!pdfTitle) {
+                const pdfData = pdfListData.find(p => p.name === pdfName || p.path === pdfPath);
+                pdfTitle = pdfData ? (pdfData.title || pdfData.name) : pdfName;
+            }
+            openPdfAtPage(pdfPath, pdfName, 1, pdfTitle);
         }
         
         // Open PDF at specific page
-        async function openPdfAtPage(pdfPath, pdfName, pageNum = 1) {
+        async function openPdfAtPage(pdfPath, pdfName, pageNum = 1, pdfTitle = null) {
             const modal = new bootstrap.Modal(document.getElementById('pdfViewerModal'));
+            
+            // Use provided title or find from pdfListData
+            let displayTitle = pdfTitle;
+            if (!displayTitle) {
+                const pdfData = pdfListData.find(p => p.name === pdfName || p.path === pdfPath);
+                displayTitle = pdfData ? (pdfData.title || pdfData.name) : pdfName;
+            }
+            
+            // Set modal title (escape HTML for safety)
             document.getElementById('pdfViewerModalLabel').innerHTML = 
-                `<i class="bi bi-file-pdf me-2"></i>${pdfName}`;
+                `<i class="bi bi-file-pdf me-2"></i>${escapeHtml(displayTitle)}`;
             
             currentPdf = pdfPath;
             currentPage = pageNum;
             scale = 1.0;
             
             try {
-                const loadingTask = pdfjsLib.getDocument(pdfPath);
+                const loadingTask = pdfjsLib.getDocument({
+                    url: pdfPath,
+                    cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+                    cMapPacked: true,
+                });
                 pdfDoc = await loadingTask.promise;
                 
                 document.getElementById('pageCount').textContent = pdfDoc.numPages;

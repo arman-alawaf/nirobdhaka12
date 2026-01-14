@@ -1149,7 +1149,8 @@
           <li><a href="#services">আমার প্রতিশ্রুতি</a></li>
           <li><a href="#gallery">গ্যালারি</a></li>
           <li><a href="#contact">যোগাযোগ</a></li>
-          <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">কেন্দ্র খুঁজুন</a></li>
+          {{-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">কেন্দ্র খুঁজুন</a></li> --}}
+          <li><a href="{{url('/center-search')}}" target="_blank">কেন্দ্র খুঁজুন</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
