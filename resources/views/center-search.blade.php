@@ -34,7 +34,8 @@
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
-            padding: 20px 0;
+            padding: 0px;
+            padding-bottom: 20px;
         }
         
         .main-container {
@@ -385,10 +386,626 @@
                 margin: 0;
             }
         }
+        
+        /* Premium Voter Campaign Section */
+        .voter-campaign-section {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 50%, #166534 100%);
+            padding: 3rem 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 40px rgba(22, 163, 74, 0.3);
+        }
+        
+        .campaign-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .campaign-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.08) 2px, transparent 2px),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.08) 2px, transparent 2px),
+                radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.08) 2px, transparent 2px);
+            background-size: 100px 100px, 150px 150px, 200px 200px;
+            animation: campaignPatternMove 25s linear infinite;
+        }
+        
+        @keyframes campaignPatternMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .campaign-gradient {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            animation: campaignPulse 5s ease-in-out infinite;
+        }
+        
+        @keyframes campaignPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.1); }
+        }
+        
+        .campaign-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .campaign-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .campaign-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .campaign-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 1rem;
+            animation: badgeFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .campaign-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .campaign-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .campaign-highlight {
+            background: linear-gradient(45deg, #fff, #e0f2fe, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: campaignShimmer 3s ease-in-out infinite;
+            background-size: 200% 100%;
+        }
+        
+        @keyframes campaignShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .campaign-features {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+        
+        .campaign-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .campaign-feature:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .campaign-feature-icon {
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .campaign-feature-text {
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .campaign-visual {
+            flex: 0 0 auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .campaign-football {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                inset -20px -20px 40px rgba(0, 0, 0, 0.1),
+                inset 20px 20px 40px rgba(255, 255, 255, 0.8);
+            animation: campaignFootballRotate 10s linear infinite, campaignFootballFloat 4s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .campaign-football:hover {
+            transform: scale(1.15);
+            animation-play-state: paused;
+        }
+        
+        @keyframes campaignFootballRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes campaignFootballFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+        
+        .campaign-football-glow {
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            top: -10%;
+            left: -10%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: campaignGlowPulse 2.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes campaignGlowPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        .campaign-football-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+        
+        .campaign-pentagon {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 2px solid #000;
+        }
+        
+        .campaign-pentagon-1 {
+            top: 20%;
+            left: 40%;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 16px solid #000;
+        }
+        
+        .campaign-pentagon-2 {
+            top: 45%;
+            left: 15%;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 16px solid #000;
+            transform: rotate(72deg);
+        }
+        
+        .campaign-pentagon-3 {
+            top: 45%;
+            right: 15%;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 16px solid #000;
+            transform: rotate(144deg);
+        }
+        
+        .campaign-pentagon-4 {
+            bottom: 20%;
+            left: 25%;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 16px solid #000;
+            transform: rotate(216deg);
+        }
+        
+        .campaign-pentagon-5 {
+            bottom: 20%;
+            right: 25%;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 16px solid #000;
+            transform: rotate(288deg);
+        }
+        
+        .campaign-pentagon-6 {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 16px solid #000;
+        }
+        
+        .campaign-cta {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .campaign-btn {
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            color: #16a34a;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .campaign-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            background: white;
+            color: #15803d;
+        }
+        
+        .campaign-btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+        
+        .campaign-btn-outline:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-color: white;
+        }
+        
+        .campaign-floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .campaign-mini-football {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: campaignMiniFloat 8s ease-in-out infinite;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+            opacity: 0.7;
+        }
+        
+        .campaign-mini-1 {
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .campaign-mini-2 {
+            top: 25%;
+            right: 12%;
+            animation-delay: 2s;
+        }
+        
+        .campaign-mini-3 {
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 4s;
+        }
+        
+        .campaign-mini-4 {
+            bottom: 30%;
+            right: 8%;
+            animation-delay: 6s;
+        }
+        
+        @keyframes campaignMiniFloat {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0.5;
+            }
+            25% {
+                transform: translate(15px, -20px) rotate(90deg);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(-10px, -35px) rotate(180deg);
+                opacity: 0.6;
+            }
+            75% {
+                transform: translate(20px, -15px) rotate(270deg);
+                opacity: 0.8;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .campaign-title {
+                font-size: 2rem;
+            }
+            
+            .campaign-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .campaign-football {
+                width: 120px;
+                height: 120px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .voter-campaign-section {
+                padding: 1rem 0.75rem;
+                max-height: 30vh;
+                min-height: 30vh;
+                overflow: hidden;
+            }
+            
+            .header-section h1 {
+                font-size: 1.75rem;
+            }
+            
+            .campaign-content {
+                height: 100%;
+                display: flex;
+                align-items: center;
+            }
+            
+            .campaign-row {
+                flex-direction: row;
+                text-align: left;
+                align-items: center;
+                gap: 1rem;
+                width: 100%;
+            }
+            
+            .campaign-text {
+                flex: 1;
+                min-width: 0;
+            }
+            
+            .campaign-badge {
+                padding: 0.3rem 1rem;
+                font-size: 0.75rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .campaign-title {
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+                line-height: 1.3;
+            }
+            
+            .campaign-subtitle {
+                font-size: 0.85rem;
+                margin-bottom: 0.75rem;
+                line-height: 1.4;
+            }
+            
+            .campaign-features {
+                display: none;
+            }
+            
+            .campaign-cta {
+                margin-top: 0.75rem;
+                gap: 0.5rem;
+                justify-content: flex-start;
+            }
+            
+            .campaign-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+                width: auto;
+                flex: 1;
+                min-width: 0;
+            }
+            
+            .campaign-visual {
+                flex: 0 0 auto;
+            }
+            
+            .campaign-football {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .campaign-pentagon-1,
+            .campaign-pentagon-2,
+            .campaign-pentagon-3,
+            .campaign-pentagon-4,
+            .campaign-pentagon-5,
+            .campaign-pentagon-6 {
+                border-left-width: 6px;
+                border-right-width: 6px;
+                border-bottom-width: 8px;
+            }
+            
+            .campaign-floating-elements {
+                display: none;
+            }
+            
+            .campaign-background {
+                opacity: 0.7;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .voter-campaign-section {
+                padding: 0.75rem 0.5rem;
+                max-height: 30vh;
+                min-height: 30vh;
+            }
+            
+            .campaign-title {
+                font-size: 1rem;
+            }
+            
+            .campaign-subtitle {
+                font-size: 0.8rem;
+            }
+            
+            .campaign-btn {
+                padding: 0.4rem 0.75rem;
+                font-size: 0.75rem;
+            }
+            
+            .campaign-football {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .campaign-row {
+                gap: 0.75rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .search-form {
+                flex-direction: column;
+            }
+            
+            .search-btn {
+                width: 100%;
+            }
+            
+            .pdf-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pdf-modal .modal-dialog {
+                max-width: 100%;
+                height: 100vh;
+                margin: 0;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="main-container">
+    <!-- Premium Voter Campaign Section -->
+    <div class="voter-campaign-section">
+        <div class="campaign-background">
+            <div class="campaign-pattern"></div>
+            <div class="campaign-gradient"></div>
+        </div>
+        
+        <div class="campaign-floating-elements">
+            <div class="campaign-mini-football campaign-mini-1">⚽</div>
+            <div class="campaign-mini-football campaign-mini-2">⚽</div>
+            <div class="campaign-mini-football campaign-mini-3">⚽</div>
+            <div class="campaign-mini-football campaign-mini-4">⚽</div>
+        </div>
+        
+        <div class="campaign-content">
+            <div class="campaign-row">
+                <div class="campaign-text">
+                    <div class="campaign-badge">
+                        <i class="bi bi-star-fill me-2"></i>নির্বাচনী প্রচারণা ২০২৬
+                    </div>
+                    <h1 class="campaign-title">
+                        <span class="campaign-highlight">⚽ ফুটবল</span> প্রতীকে<br>
+                        ভোট দিন, জয়যুক্ত করুন
+                    </h1>
+                    <p class="campaign-subtitle">
+                        <strong translate="no">সাইফুল আলম নীরব</strong> - ঢাকা ১২ এলাকার উন্নয়ন, জনগণের কল্যাণ ও সমৃদ্ধির জন্য আপনার ভোট প্রয়োজন
+                    </p>
+                    
+                    <div class="campaign-features">
+                        <div class="campaign-feature">
+                            <i class="bi bi-calendar-check campaign-feature-icon"></i>
+                            <span class="campaign-feature-text">১২ ফেব্রুয়ারি ২০২৬</span>
+                        </div>
+                        <div class="campaign-feature">
+                            <i class="bi bi-geo-alt campaign-feature-icon"></i>
+                            <span class="campaign-feature-text">ঢাকা ১২ এলাকা</span>
+                        </div>
+                        <div class="campaign-feature">
+                            <i class="bi bi-trophy campaign-feature-icon"></i>
+                            <span class="campaign-feature-text">⚽ ফুটবল প্রতীক</span>
+                        </div>
+                    </div>
+                    
+                    <div class="campaign-cta">
+                        <a href="{{url('/')}}" class="campaign-btn">
+                            <i class="bi bi-house-door"></i>
+                            হোমপেজে যান
+                        </a>
+                        <a href="{{url('/')}}#about" class="campaign-btn campaign-btn-outline">
+                            <i class="bi bi-person-circle"></i>
+                            প্রার্থী সম্পর্কে
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="campaign-visual">
+                    <div class="campaign-football" id="campaignFootball">
+                        <div class="campaign-football-pattern">
+                            <div class="campaign-pentagon campaign-pentagon-1"></div>
+                            <div class="campaign-pentagon campaign-pentagon-2"></div>
+                            <div class="campaign-pentagon campaign-pentagon-3"></div>
+                            <div class="campaign-pentagon campaign-pentagon-4"></div>
+                            <div class="campaign-pentagon campaign-pentagon-5"></div>
+                            <div class="campaign-pentagon campaign-pentagon-6"></div>
+                        </div>
+                        <div class="campaign-football-glow"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-container pt-2">
         <!-- Header Section -->
         <div class="header-section">
             <h1><i class="bi bi-search me-2"></i>কেন্দ্র অনুসন্ধান</h1>
@@ -400,7 +1017,7 @@
             <form id="nidSearchForm" class="search-form mb-2">
                 <div class="search-input-group">
                     <label for="nidInput"><i class="bi bi-card-text me-2"></i>ভোটার নং (NID) লিখুন</label>
-                    <input type="text" id="nidInput" name="nid" placeholder="উদাহরণ: 1234567890123 বা ১২৩৪৫৬৭৮৯০১২৩" required>
+                    <input type="text" id="nidInput" name="nid" placeholder="উদাহরণ: ১২৩৪৫৬৭৮৯০১২৩ বা 1234567890123" required>
                 </div>
                 <button type="submit" class="search-btn" id="searchBtn">
                     <span class="btn-spinner">
@@ -1062,13 +1679,47 @@
             // Clear searched NID when modal closes
             searchedNid = null;
         });
+        
+        // Campaign Football Interactive Effect
+        const campaignFootball = document.getElementById('campaignFootball');
+        if (campaignFootball) {
+            campaignFootball.addEventListener('click', function() {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = 'campaignFootballRotate 10s linear infinite, campaignFootballFloat 4s ease-in-out infinite';
+                }, 10);
+                
+                // Create ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.width = '150px';
+                ripple.style.height = '150px';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.4)';
+                ripple.style.transform = 'translate(-50%, -50%) scale(0)';
+                ripple.style.top = '50%';
+                ripple.style.left = '50%';
+                ripple.style.animation = 'campaignRipple 0.6s ease-out';
+                ripple.style.pointerEvents = 'none';
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        }
+        
+        // Add ripple animation for campaign football
+        const campaignStyle = document.createElement('style');
+        campaignStyle.textContent = `
+            @keyframes campaignRipple {
+                to {
+                    transform: translate(-50%, -50%) scale(2);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(campaignStyle);
     </script>
 
-    <style>
-        .g{
-            color: #7df865;
-        }
-    </style>
 </body>
 </html>
 
