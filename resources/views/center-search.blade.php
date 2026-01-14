@@ -400,7 +400,7 @@
             <form id="nidSearchForm" class="search-form mb-2">
                 <div class="search-input-group">
                     <label for="nidInput"><i class="bi bi-card-text me-2"></i>ভোটার নং (NID) লিখুন</label>
-                    <input type="text" id="nidInput" name="nid" placeholder="উদাহরণ: 1234567890123" required>
+                    <input type="text" id="nidInput" name="nid" placeholder="উদাহরণ: 1234567890123 বা ১২৩৪৫৬৭৮৯০১২৩" required>
                 </div>
                 <button type="submit" class="search-btn" id="searchBtn">
                     <span class="btn-spinner">
@@ -492,6 +492,36 @@
             return String(text).replace(/[&<>"']/g, m => map[m]);
         }
         
+        // Convert Bangla digits to English digits
+        function banglaToEnglish(text) {
+            if (!text) return '';
+            const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+            const englishDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+            let result = String(text);
+            for (let i = 0; i < banglaDigits.length; i++) {
+                result = result.replace(new RegExp(banglaDigits[i], 'g'), englishDigits[i]);
+            }
+            return result;
+        }
+        
+        // Convert English digits to Bangla digits
+        function englishToBangla(text) {
+            if (!text) return '';
+            const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+            const englishDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+            let result = String(text);
+            for (let i = 0; i < englishDigits.length; i++) {
+                result = result.replace(new RegExp(englishDigits[i], 'g'), banglaDigits[i]);
+            }
+            return result;
+        }
+        
+        // Normalize text for searching - converts to English digits and removes spaces
+        function normalizeForSearch(text) {
+            if (!text) return '';
+            return banglaToEnglish(String(text)).replace(/\s/g, '').toLowerCase();
+        }
+        
         // Global variables
         let currentPdf = null;
         let currentPage = 1;
@@ -499,6 +529,7 @@
         let scale = 1.0;
         const scaleDelta = 0.2;
         let pdfListData = []; // Store PDF data with titles
+        let searchedNid = null; // Store the searched NID for highlighting
         
         // Load PDF list on page load
         document.addEventListener('DOMContentLoaded', function() {
@@ -600,7 +631,14 @@
                 
                 let found = false;
                 const searchTexts = ['ভোটার নং', 'ভোটার নম্বর', 'NID', 'nid', 'নং'];
-                const nidPattern = new RegExp(nid.replace(/\s/g, ''), 'i');
+                
+                // Normalize the search NID to English digits for consistent searching
+                const normalizedNid = normalizeForSearch(nid);
+                const nidEnglish = banglaToEnglish(nid).replace(/\s/g, '');
+                const nidBangla = englishToBangla(nid).replace(/\s/g, '');
+                
+                // Create pattern that matches both English and Bangla versions
+                const nidPattern = new RegExp(normalizedNid.replace(/(\d)/g, '\\s*$1'), 'i');
                 
                 // Search in each PDF
                 for (let pdfIndex = 0; pdfIndex < pdfsToSearch.length; pdfIndex++) {
@@ -629,12 +667,19 @@
                                     }
                                 }
                                 
-                                // Remove extra spaces and normalize
-                                pageText = pageText.replace(/\s+/g, ' ').trim();
+                                // Normalize page text for searching (convert to English digits)
+                                const normalizedPageText = normalizeForSearch(pageText);
+                                const originalPageText = pageText.replace(/\s+/g, ' ').trim();
                                 
-                                // Check if page contains search text and NID
-                                const hasSearchText = searchTexts.some(text => pageText.includes(text));
-                                const hasNid = nidPattern.test(pageText) || pageText.includes(nid);
+                                // Check if page contains search text
+                                const hasSearchText = searchTexts.some(text => originalPageText.includes(text));
+                                
+                                // Check if normalized page text contains normalized NID
+                                // Also check for both English and Bangla versions in original text
+                                const hasNid = normalizedPageText.includes(normalizedNid) || 
+                                             originalPageText.includes(nidEnglish) || 
+                                             originalPageText.includes(nidBangla) ||
+                                             nidPattern.test(normalizedPageText);
                                 
                                 if (hasSearchText && hasNid) {
                                     found = true;
@@ -642,9 +687,9 @@
                                     statusDiv.className = 'search-status success';
                                     statusDiv.innerHTML = `<i class="bi bi-check-circle me-2"></i>পাওয়া গেছে! PDF: ${pdf.name}, পাতা: ${pageNum}`;
                                     
-                                    // Open PDF at the found page with title
+                                    // Open PDF at the found page with title and NID for highlighting
                                     setTimeout(() => {
-                                        openPdfAtPage(pdf.path, pdf.name, pageNum, pdfTitle);
+                                        openPdfAtPage(pdf.path, pdf.name, pageNum, pdfTitle, nid);
                                     }, 500);
                                     
                                     return; // Stop searching
@@ -678,6 +723,9 @@
         
         // Open PDF in modal
         function openPdf(pdfPath, pdfName, pdfTitle = null) {
+            // Clear searched NID when opening PDF manually (not from search)
+            searchedNid = null;
+            
             // If title not provided, try to find it from pdfListData
             if (!pdfTitle) {
                 const pdfData = pdfListData.find(p => p.name === pdfName || p.path === pdfPath);
@@ -687,8 +735,11 @@
         }
         
         // Open PDF at specific page
-        async function openPdfAtPage(pdfPath, pdfName, pageNum = 1, pdfTitle = null) {
+        async function openPdfAtPage(pdfPath, pdfName, pageNum = 1, pdfTitle = null, nidToHighlight = null) {
             const modal = new bootstrap.Modal(document.getElementById('pdfViewerModal'));
+            
+            // Store the NID for highlighting
+            searchedNid = nidToHighlight;
             
             // Use provided title or find from pdfListData
             let displayTitle = pdfTitle;
@@ -744,6 +795,11 @@
                 
                 await page.render(renderContext).promise;
                 
+                // Highlight NID if it exists and we're on the page where it was found
+                if (searchedNid && currentPage === pageNum) {
+                    await highlightNidOnPage(page, context, viewport, searchedNid);
+                }
+                
                 const viewer = document.getElementById('pdfViewer');
                 viewer.innerHTML = '';
                 viewer.appendChild(canvas);
@@ -752,6 +808,210 @@
                 document.getElementById('zoomLevel').textContent = Math.round(scale * 100) + '%';
             } catch (error) {
                 console.error('Error rendering page:', error);
+            }
+        }
+        
+        // Highlight NID on the rendered page
+        async function highlightNidOnPage(page, context, viewport, nid) {
+            try {
+                const textContent = await page.getTextContent();
+                // Normalize NID to English digits for consistent matching
+                const nidClean = normalizeForSearch(nid);
+                const nidEnglish = banglaToEnglish(nid).replace(/\s/g, '').toLowerCase();
+                const nidBangla = englishToBangla(nid).replace(/\s/g, '').toLowerCase();
+                const nidPattern = new RegExp(nidClean.replace(/(\d)/g, '\\s*$1'), 'i'); // Allow spaces between digits
+                
+                // Get the default viewport for coordinate transformation
+                const defaultViewport = page.getViewport({ scale: 1.0 });
+                const scaleX = viewport.width / defaultViewport.width;
+                const scaleY = viewport.height / defaultViewport.height;
+                
+                // Find text items that contain the NID
+                const highlightRects = [];
+                
+                // First, try to find exact matches in individual text items
+                for (const item of textContent.items) {
+                    if (item.str) {
+                        const itemText = item.str.replace(/\s/g, '').toLowerCase();
+                        const normalizedItemText = normalizeForSearch(item.str);
+                        // Check if this text item contains the NID (in any form)
+                        if (normalizedItemText.includes(nidClean) || 
+                            itemText.includes(nidEnglish) || 
+                            itemText.includes(nidBangla)) {
+                            const transform = item.transform;
+                            if (transform && transform.length >= 6) {
+                                // PDF coordinates
+                                const pdfX = transform[4];
+                                const pdfY = transform[5];
+                                
+                                // Transform to viewport coordinates
+                                const viewportX = pdfX * scaleX;
+                                const viewportY = (defaultViewport.height - pdfY) * scaleY;
+                                
+                                // Calculate dimensions
+                                const fontSize = item.fontSize || 12;
+                                const itemWidth = item.width || (item.str.length * fontSize * 0.5);
+                                const itemHeight = fontSize * 1.2;
+                                
+                                // Calculate the portion of the item that contains the NID
+                                const nidStartInItem = itemText.indexOf(nidClean);
+                                const nidLength = nidClean.length;
+                                const itemLength = itemText.length;
+                                
+                                const highlightX = viewportX + (itemWidth * (nidStartInItem / itemLength) * scaleX);
+                                const highlightWidth = (itemWidth * (nidLength / itemLength)) * scaleX;
+                                
+                                highlightRects.push({
+                                    x: highlightX,
+                                    y: viewportY - (itemHeight * scaleY),
+                                    width: highlightWidth,
+                                    height: itemHeight * scaleY
+                                });
+                            }
+                        }
+                    }
+                }
+                
+                // If no matches found, try searching across multiple text items
+                if (highlightRects.length === 0) {
+                    let combinedText = '';
+                    const textItems = [];
+                    
+                    for (const item of textContent.items) {
+                        if (item.str) {
+                            combinedText += item.str;
+                            textItems.push(item);
+                        }
+                    }
+                    
+                    // Normalize combined text for searching
+                    const combinedTextNormalized = normalizeForSearch(combinedText);
+                    const combinedTextClean = combinedText.replace(/\s/g, '').toLowerCase();
+                    
+                    // Check for NID in normalized text, English, or Bangla form
+                    let nidIndex = combinedTextNormalized.indexOf(nidClean);
+                    if (nidIndex === -1) {
+                        nidIndex = combinedTextClean.indexOf(nidEnglish);
+                    }
+                    if (nidIndex === -1) {
+                        nidIndex = combinedTextClean.indexOf(nidBangla);
+                    }
+                    
+                    if (nidIndex !== -1) {
+                        // Find which text item(s) contain the NID
+                        let charCount = 0;
+                        let startItem = null;
+                        let endItem = null;
+                        let startOffset = 0;
+                        let endOffset = 0;
+                        
+                        // Use normalized text for character counting
+                        let normalizedCharCount = 0;
+                        for (let i = 0; i < textItems.length; i++) {
+                            const item = textItems[i];
+                            const itemText = item.str.replace(/\s/g, '').toLowerCase();
+                            const normalizedItemText = normalizeForSearch(item.str);
+                            const itemStart = normalizedCharCount;
+                            const itemEnd = normalizedCharCount + normalizedItemText.length;
+                            
+                            if (nidIndex >= itemStart && nidIndex < itemEnd) {
+                                if (!startItem) {
+                                    startItem = item;
+                                    // Find position in normalized item text
+                                    const itemNormalized = normalizeForSearch(item.str);
+                                    startOffset = Math.min(nidIndex - itemStart, itemNormalized.length);
+                                }
+                            }
+                            
+                            if (nidIndex + nidClean.length > itemStart && nidIndex + nidClean.length <= itemEnd) {
+                                endItem = item;
+                                const itemNormalized = normalizeForSearch(item.str);
+                                endOffset = Math.min((nidIndex + nidClean.length) - itemStart, itemNormalized.length);
+                                break;
+                            }
+                            
+                            normalizedCharCount = itemEnd;
+                        }
+                        
+                        if (startItem) {
+                            const transform = startItem.transform;
+                            if (transform && transform.length >= 6) {
+                                const pdfX = transform[4];
+                                const pdfY = transform[5];
+                                
+                                const viewportX = pdfX * scaleX;
+                                const viewportY = (defaultViewport.height - pdfY) * scaleY;
+                                
+                                const fontSize = startItem.fontSize || 12;
+                                const itemWidth = startItem.width || (startItem.str.length * fontSize * 0.5);
+                                const itemHeight = fontSize * 1.2;
+                                
+                                const startItemTextNormalized = normalizeForSearch(startItem.str);
+                                const startItemTextLength = startItemTextNormalized.length || startItem.str.length;
+                                const highlightX = viewportX + (itemWidth * (startOffset / Math.max(startItemTextLength, 1)) * scaleX);
+                                
+                                // Calculate width - if spans multiple items, estimate
+                                let highlightWidth = 0;
+                                if (endItem && endItem !== startItem) {
+                                    // Span multiple items - estimate total width
+                                    const startItemTextNormalized = normalizeForSearch(startItem.str);
+                                    const startItemTextLength = startItemTextNormalized.length || startItem.str.length;
+                                    highlightWidth = (itemWidth * ((startItemTextLength - startOffset) / Math.max(startItemTextLength, 1))) * scaleX;
+                                    // Add width of items in between
+                                    const startIndex = textItems.indexOf(startItem);
+                                    const endIndex = textItems.indexOf(endItem);
+                                    for (let i = startIndex + 1; i < endIndex; i++) {
+                                        const midItem = textItems[i];
+                                        const midFontSize = midItem.fontSize || 12;
+                                        const midWidth = midItem.width || (midItem.str.length * midFontSize * 0.5);
+                                        highlightWidth += midWidth * scaleX;
+                                    }
+                                    // Add width of end item portion
+                                    const endItemTextNormalized = normalizeForSearch(endItem.str);
+                                    const endItemTextLength = endItemTextNormalized.length || endItem.str.length;
+                                    const endFontSize = endItem.fontSize || 12;
+                                    const endWidth = endItem.width || (endItem.str.length * endFontSize * 0.5);
+                                    highlightWidth += (endWidth * (endOffset / Math.max(endItemTextLength, 1))) * scaleX;
+                                } else {
+                                    // Single item
+                                    const startItemTextNormalized = normalizeForSearch(startItem.str);
+                                    const startItemTextLength = startItemTextNormalized.length || startItem.str.length;
+                                    highlightWidth = (itemWidth * (nidClean.length / Math.max(startItemTextLength, 1))) * scaleX;
+                                }
+                                
+                                highlightRects.push({
+                                    x: highlightX,
+                                    y: viewportY - (itemHeight * scaleY),
+                                    width: highlightWidth,
+                                    height: itemHeight * scaleY
+                                });
+                            }
+                        }
+                    }
+                }
+                
+                // Draw highlight rectangles
+                if (highlightRects.length > 0) {
+                    context.save();
+                    context.globalAlpha = 0.4;
+                    context.fillStyle = '#ffeb3b'; // Yellow highlight
+                    
+                    highlightRects.forEach(rect => {
+                        context.fillRect(rect.x, rect.y, rect.width, rect.height);
+                    });
+                    
+                    // Add border for better visibility
+                    context.globalAlpha = 0.9;
+                    context.strokeStyle = '#ff9800';
+                    context.lineWidth = 2;
+                    highlightRects.forEach(rect => {
+                        context.strokeRect(rect.x, rect.y, rect.width, rect.height);
+                    });
+                    
+                    context.restore();
+                }
+            } catch (error) {
+                console.error('Error highlighting NID:', error);
             }
         }
         
@@ -797,6 +1057,8 @@
                 pdfDoc = null;
             }
             document.getElementById('pdfViewer').innerHTML = '';
+            // Clear searched NID when modal closes
+            searchedNid = null;
         });
     </script>
 </body>
