@@ -2068,15 +2068,16 @@
         
         html += '<div class="table-container"><table class="table table-striped table-hover table-bordered mb-0">';
         html += '<thead><tr>';
-        html += '<th>আইডি</th><th>আসন</th><th>নাম</th><th>জন্ম তারিখ</th><th>এনআইডি</th><th>লিঙ্গ</th>';
+        html += '<th>আইডি</th><th>আসন</th><th>SL</th><th>নাম</th><th>জন্ম তারিখ</th><th>এনআইডি</th><th>লিঙ্গ</th>';
         html += '<th>পিতা</th><th>মাতা</th><th>পেশা</th><th>ঠিকানা</th><th>জেলা</th><th>উপজেলা</th>';
-        html += '<th>সিটি কর্পোরেশন</th><th>ওয়ার্ড</th><th>এলাকা</th><th>এলাকা নম্বর</th>';
+        html += '<th>সিটি কর্পোরেশন</th><th>ওয়ার্ড</th><th>এলাকা</th><th>এলাকা নম্বর</th><th>Center</th>';
         html += '</tr></thead><tbody>';
         
         members.forEach(member => {
           html += '<tr>';
           html += `<td>${escapeHtml(member.id || '')}</td>`;
           html += `<td>${escapeHtml(member.ashon || '')}</td>`;
+          html += `<td>${escapeHtml(member.sl || '')}</td>`;
           html += `<td>${escapeHtml(member.name || '')}</td>`;
           html += `<td>${escapeHtml(member.dob || '')}</td>`;
           html += `<td>${escapeHtml(member.nid || '')}</td>`;
@@ -2091,6 +2092,7 @@
           html += `<td>${escapeHtml(member.word || '')}</td>`;
           html += `<td>${escapeHtml(member.area || '')}</td>`;
           html += `<td>${escapeHtml(member.area_number || '')}</td>`;
+          html += `<td>${escapeHtml(member.center || '')}</td>`;
           html += '</tr>';
         });
         

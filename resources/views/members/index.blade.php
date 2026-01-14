@@ -55,6 +55,7 @@
                 <tr>
                     <th>আইডি</th>
                     <th>আসন</th>
+                    <th>SL</th>
                     <th>নাম</th>
                     <th>জন্ম তারিখ</th>
                     <th>এনআইডি</th>
@@ -69,6 +70,7 @@
                     <th>ওয়ার্ড</th>
                     <th>এলাকা</th>
                     <th>এলাকা নম্বর</th>
+                    <th>Center</th>
                     <th>কর্ম</th>
                 </tr>
             </thead>
@@ -77,6 +79,7 @@
                     <tr>
                         <td>{{ $member->id }}</td>
                         <td>{{ $member->ashon ?? 'N/A' }}</td>
+                        <td>{{ $member->sl ?? 'N/A' }}</td>
                         <td>{{ $member->name }}</td>
                         <td>{{ $member->dob ? $member->dob->format('Y-m-d') : 'N/A' }}</td>
                         <td>{{ $member->nid }}</td>
@@ -91,6 +94,7 @@
                         <td>{{ $member->word ?? 'N/A' }}</td>
                         <td>{{ $member->area ?? 'N/A' }}</td>
                         <td>{{ $member->area_number ?? 'N/A' }}</td>
+                        <td>{{ $member->center ?? 'N/A' }}</td>
                         <td>
                             <div class="actions">
                                 <a href="{{ route('members.show', $member) }}" class="btn btn-info btn-sm">দেখুন</a>
@@ -105,7 +109,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="17" style="text-align: center; padding: 20px;">কোন সদস্য পাওয়া যায়নি।</td>
+                        <td colspan="19" style="text-align: center; padding: 20px;">কোন সদস্য পাওয়া যায়নি।</td>
                     </tr>
                 @endforelse
             </tbody>

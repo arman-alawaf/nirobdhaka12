@@ -4,11 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\PdfSearchController;
 
 // Public routes
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/center-search', function () { return view('center-search'); });
+Route::get('/api/pdfs', [PdfSearchController::class, 'getPdfList'])->name('pdfs.list');
 
 // AJAX search route for modal
 Route::post('members/search', [MemberController::class, 'search'])->name('members.search');

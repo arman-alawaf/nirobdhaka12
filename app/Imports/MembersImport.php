@@ -35,6 +35,7 @@ class MembersImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnF
         // Map various header formats to database fields
         $rowData = [
             'ashon' => $this->getValue($row, ['ashon', 'ashon']),
+            'sl' => $this->getValue($row, ['sl', 'sl']),
             'name' => $this->getValue($row, ['name', 'name']),
             'dob' => $this->parseDate($this->getValue($row, ['date_of_birth', 'dob', 'date of birth'])),
             'nid' => $this->getValue($row, ['nid', 'national_id', 'national id']),
@@ -49,6 +50,7 @@ class MembersImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnF
             'word' => $this->getValue($row, ['word', 'ward']),
             'area' => $this->getValue($row, ['area']),
             'area_number' => $this->getValue($row, ['area_number', 'area number', 'area_no', 'area no']),
+            'center' => $this->getValue($row, ['center', 'centre']),
         ];
 
         // Clean up empty strings

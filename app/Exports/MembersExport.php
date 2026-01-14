@@ -35,6 +35,7 @@ class MembersExport implements FromCollection, WithHeadings, WithMapping, WithSt
         return [
             'ID',
             'Ashon',
+            'SL',
             'Name',
             'Date of Birth',
             'NID',
@@ -49,6 +50,7 @@ class MembersExport implements FromCollection, WithHeadings, WithMapping, WithSt
             'Word',
             'Area',
             'Area Number',
+            'Center',
             'Created At',
             'Updated At'
         ];
@@ -63,6 +65,7 @@ class MembersExport implements FromCollection, WithHeadings, WithMapping, WithSt
         return [
             $member->id ?? '',
             $member->ashon ?? '',
+            $member->sl ?? '',
             $member->name ?? '',
             $member->dob ? ($member->dob instanceof \Carbon\Carbon ? $member->dob->format('Y-m-d') : $member->dob) : '',
             $member->nid ?? '',
@@ -77,6 +80,7 @@ class MembersExport implements FromCollection, WithHeadings, WithMapping, WithSt
             $member->word ?? '',
             $member->area ?? '',
             $member->area_number ?? '',
+            $member->center ?? '',
             $member->created_at ? ($member->created_at instanceof \Carbon\Carbon ? $member->created_at->format('Y-m-d H:i:s') : $member->created_at) : '',
             $member->updated_at ? ($member->updated_at instanceof \Carbon\Carbon ? $member->updated_at->format('Y-m-d H:i:s') : $member->updated_at) : '',
         ];

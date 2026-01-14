@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->string('ashon')->nullable();
+            $table->string('sl')->nullable();
             $table->string('name');
             $table->date('dob')->nullable();
             $table->string('nid')->unique();
@@ -28,6 +29,7 @@ return new class extends Migration
             $table->string('word')->nullable();
             $table->string('area')->nullable();
             $table->string('area_number')->nullable();
+            $table->string('center')->nullable();
             $table->timestamps();
 
             // Indexes for efficient filtering and searching

@@ -20,6 +20,14 @@
             </div>
 
             <div class="form-group">
+                <label for="sl">SL</label>
+                <input type="text" id="sl" name="sl" value="{{ old('sl') }}">
+                @error('sl')
+                    <div class="error">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
                 <label for="name">নাম <span style="color: red;">*</span></label>
                 <input type="text" id="name" name="name" value="{{ old('name') }}" required>
                 @error('name')
@@ -144,6 +152,14 @@
                 <label for="area_number">এলাকা নম্বর</label>
                 <input type="text" id="area_number" name="area_number" value="{{ old('area_number') }}">
                 @error('area_number')
+                    <div class="error">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="center">Center</label>
+                <input type="text" id="center" name="center" value="{{ old('center') }}">
+                @error('center')
                     <div class="error">{{ $message }}</div>
                 @enderror
             </div>

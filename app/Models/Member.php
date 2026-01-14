@@ -16,6 +16,7 @@ class Member extends Model
      */
     protected $fillable = [
         'ashon',
+        'sl',
         'name',
         'dob',
         'nid',
@@ -30,6 +31,7 @@ class Member extends Model
         'word',
         'area',
         'area_number',
+        'center',
     ];
 
     /**

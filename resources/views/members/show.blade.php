@@ -24,6 +24,10 @@
             <div class="detail-value">{{ $member->ashon ?? 'N/A' }}</div>
         </div>
         <div class="detail-row">
+            <div class="detail-label">SL:</div>
+            <div class="detail-value">{{ $member->sl ?? 'N/A' }}</div>
+        </div>
+        <div class="detail-row">
             <div class="detail-label">নাম:</div>
             <div class="detail-value">{{ $member->name }}</div>
         </div>
@@ -86,6 +90,10 @@
         <div class="detail-row">
             <div class="detail-label">এলাকা নম্বর:</div>
             <div class="detail-value">{{ $member->area_number ?? 'N/A' }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Center:</div>
+            <div class="detail-value">{{ $member->center ?? 'N/A' }}</div>
         </div>
     </div>
 

@@ -81,6 +81,7 @@ class MemberController extends Controller
     {
         $validated = $request->validate([
             'ashon' => 'nullable|string|max:255',
+            'sl' => 'nullable|string|max:255',
             'name' => 'required|string|max:255',
             'dob' => 'nullable|date',
             'nid' => 'required|string|max:255|unique:members,nid',
@@ -95,6 +96,7 @@ class MemberController extends Controller
             'word' => 'nullable|string|max:255',
             'area' => 'nullable|string|max:255',
             'area_number' => 'nullable|string|max:255',
+            'center' => 'nullable|string|max:255',
         ]);
 
         Member::create($validated);
@@ -390,6 +392,7 @@ class MemberController extends Controller
             return [
                 'id' => $member->id,
                 'ashon' => $member->ashon ?? 'N/A',
+                'sl' => $member->sl ?? 'N/A',
                 'name' => $member->name,
                 'dob' => $member->dob ? $member->dob->format('Y-m-d') : 'N/A',
                 'nid' => $member->nid,
@@ -404,6 +407,7 @@ class MemberController extends Controller
                 'word' => $member->word ?? 'N/A',
                 'area' => $member->area ?? 'N/A',
                 'area_number' => $member->area_number ?? 'N/A',
+                'center' => $member->center ?? 'N/A',
             ];
         });
 
