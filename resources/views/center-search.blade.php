@@ -123,6 +123,40 @@
             transform: translateY(0);
         }
         
+        .search-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .search-btn:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .search-btn .spinner-border-sm {
+            width: 1rem;
+            height: 1rem;
+            border-width: 0.15em;
+            margin-right: 0.5rem;
+        }
+        
+        .search-btn .btn-text {
+            display: inline-block;
+        }
+        
+        .search-btn .btn-spinner {
+            display: none;
+        }
+        
+        .search-btn:disabled .btn-text {
+            display: none;
+        }
+        
+        .search-btn:disabled .btn-spinner {
+            display: inline-block;
+        }
+        
         .pdf-list-section {
             background: white;
             padding: 2rem;
@@ -357,13 +391,18 @@
         
         <!-- Search Section -->
         <div class="search-section">
-            <form id="nidSearchForm" class="search-form">
+            <form id="nidSearchForm" class="search-form mb-2">
                 <div class="search-input-group">
                     <label for="nidInput"><i class="bi bi-card-text me-2"></i>ভোটার নং (NID) লিখুন</label>
                     <input type="text" id="nidInput" name="nid" placeholder="উদাহরণ: 1234567890123" required>
                 </div>
-                <button type="submit" class="search-btn">
-                    <i class="bi bi-search me-2"></i>অনুসন্ধান করুন
+                <button type="submit" class="search-btn" id="searchBtn">
+                    <span class="btn-spinner">
+                        <span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span>
+                    </span>
+                    <span class="btn-text">
+                        <i class="bi bi-search me-2"></i>অনুসন্ধান করুন
+                    </span>
                 </button>
             </form>
             <div id="searchStatus" class="search-status"></div>
@@ -460,10 +499,15 @@
             loadPdfList();
             
             // Setup search form
-            document.getElementById('nidSearchForm').addEventListener('submit', function(e) {
+            const searchForm = document.getElementById('nidSearchForm');
+            const searchBtn = document.getElementById('searchBtn');
+            
+            searchForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const nid = document.getElementById('nidInput').value.trim();
                 if (nid) {
+                    // Disable button and show spinner
+                    searchBtn.disabled = true;
                     searchNidInPdfs(nid);
                 }
             });
@@ -523,6 +567,8 @@
         // Search NID in all PDFs
         async function searchNidInPdfs(nid) {
             const statusDiv = document.getElementById('searchStatus');
+            const searchBtn = document.getElementById('searchBtn');
+            
             statusDiv.style.display = 'block';
             statusDiv.className = 'search-status info';
             statusDiv.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>অনুসন্ধান করা হচ্ছে... অনুগ্রহ করে অপেক্ষা করুন...';
@@ -542,6 +588,7 @@
                 if (!pdfsToSearch || pdfsToSearch.length === 0) {
                     statusDiv.className = 'search-status error';
                     statusDiv.innerHTML = '<i class="bi bi-exclamation-triangle me-2"></i>কোন PDF ফাইল পাওয়া যায়নি';
+                    searchBtn.disabled = false;
                     return;
                 }
                 
@@ -614,6 +661,12 @@
                 console.error('Error searching PDFs:', error);
                 statusDiv.className = 'search-status error';
                 statusDiv.innerHTML = '<i class="bi bi-exclamation-triangle me-2"></i>অনুসন্ধান করতে সমস্যা হয়েছে: ' + error.message;
+            } finally {
+                // Re-enable button after search completes
+                const searchBtn = document.getElementById('searchBtn');
+                if (searchBtn) {
+                    searchBtn.disabled = false;
+                }
             }
         }
         
