@@ -770,6 +770,88 @@
             }
         }
         
+        @media (min-width: 769px) and (max-width: 1400px) {
+            .voter-campaign-section {
+                padding: 1.5rem 1.5rem;
+                max-height: 30vh;
+                min-height: 30vh;
+                overflow: hidden;
+            }
+            
+            .campaign-content {
+                height: 100%;
+                display: flex;
+                align-items: center;
+            }
+            
+            .campaign-row {
+                align-items: center;
+                gap: 2rem;
+            }
+            
+            .campaign-badge {
+                padding: 0.4rem 1.25rem;
+                font-size: 0.85rem;
+                margin-bottom: 0.75rem;
+            }
+            
+            .campaign-title {
+                font-size: 1.5rem;
+                margin-bottom: 0.75rem;
+                line-height: 1.3;
+            }
+            
+            .campaign-subtitle {
+                font-size: 0.95rem;
+                margin-bottom: 1rem;
+                line-height: 1.5;
+            }
+            
+            .campaign-features {
+                gap: 1rem;
+                margin-top: 1rem;
+            }
+            
+            .campaign-feature {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .campaign-feature-icon {
+                font-size: 1.2rem;
+            }
+            
+            .campaign-cta {
+                margin-top: 1rem;
+                gap: 0.75rem;
+            }
+            
+            .campaign-btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.95rem;
+            }
+            
+            .campaign-football {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .campaign-pentagon-1,
+            .campaign-pentagon-2,
+            .campaign-pentagon-3,
+            .campaign-pentagon-4,
+            .campaign-pentagon-5,
+            .campaign-pentagon-6 {
+                border-left-width: 8px;
+                border-right-width: 8px;
+                border-bottom-width: 12px;
+            }
+            
+            .campaign-floating-elements {
+                opacity: 0.5;
+            }
+        }
+        
         @media (max-width: 992px) {
             .campaign-title {
                 font-size: 2rem;
@@ -954,7 +1036,7 @@
                         <i class="bi bi-star-fill me-2"></i>নির্বাচনী প্রচারণা ২০২৬
                     </div>
                     <h1 class="campaign-title">
-                        <span class="campaign-highlight">⚽ ফুটবল</span> প্রতীকে<br>
+                        <span class="campaign-highlight2">⚽ ফুটবল</span> প্রতীকে<br>
                         ভোট দিন, জয়যুক্ত করুন
                     </h1>
                     <p class="campaign-subtitle">
