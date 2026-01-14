@@ -6,8 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <title>কেন্দ্র অনুসন্ধান - ভোটার নং অনুসন্ধান | সাইফুল আলম নীরব</title>
-    
+    <title>সাইফুল আলম নীরব - ঢাকা ১২ এলাকার প্রার্থী | নির্বাচনী প্রতীক: ফুটবল ⚽ | ১২ ফেব্রুয়ারি ২০২৬</title>
+  
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon" type="image/jpeg">
+  <link href="assets/img/favicon.png" rel="apple-touch-icon" sizes="180x180">
+  <link href="assets/img/favicon.png" rel="icon" type="image/jpeg" sizes="32x32">
+  <link href="assets/img/favicon.png" rel="icon" type="image/jpeg" sizes="16x16">
+  
     <!-- Fonts - Bangla Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
