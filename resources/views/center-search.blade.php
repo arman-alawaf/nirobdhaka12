@@ -994,16 +994,16 @@
                 if (highlightRects.length > 0) {
                     context.save();
                     context.globalAlpha = 0.4;
-                    context.fillStyle = '#ffeb3b'; // Yellow highlight
+                    context.fillStyle = '#7df865'; // Yellow highlight
                     
                     highlightRects.forEach(rect => {
                         context.fillRect(rect.x, rect.y, rect.width, rect.height);
                     });
                     
                     // Add border for better visibility
-                    context.globalAlpha = 0.9;
-                    context.strokeStyle = '#ff9800';
-                    context.lineWidth = 2;
+                    context.globalAlpha = 0.4;
+                    context.strokeStyle = '#7df865'; // Same color as fill
+                    context.lineWidth = 5;
                     highlightRects.forEach(rect => {
                         context.strokeRect(rect.x, rect.y, rect.width, rect.height);
                     });
@@ -1014,6 +1014,8 @@
                 console.error('Error highlighting NID:', error);
             }
         }
+        
+
         
         // PDF navigation controls
         document.getElementById('prevPage').addEventListener('click', function() {
@@ -1061,6 +1063,12 @@
             searchedNid = null;
         });
     </script>
+
+    <style>
+        .g{
+            color: #7df865;
+        }
+    </style>
 </body>
 </html>
 
