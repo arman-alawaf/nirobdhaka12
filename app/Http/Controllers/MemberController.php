@@ -164,6 +164,27 @@ class MemberController extends Controller
      */
     public function export()
     {
+        // Check if zip extension is loaded (required for PhpSpreadsheet)
+        if (!extension_loaded('zip') || !class_exists('ZipArchive')) {
+            $phpIniPath = php_ini_loaded_file();
+            $errorMessage = "PHP Zip extension is not enabled. This is required for Excel file export.\n\n";
+            $errorMessage .= "To fix this:\n";
+            $errorMessage .= "1. Open XAMPP Control Panel\n";
+            $errorMessage .= "2. Click 'Config' button next to Apache\n";
+            $errorMessage .= "3. Select 'PHP (php.ini)'\n";
+            $errorMessage .= "4. Find ';extension=zip' and remove the semicolon to make it 'extension=zip'\n";
+            $errorMessage .= "5. Save the file and restart Apache\n\n";
+            $errorMessage .= "PHP Configuration File: " . ($phpIniPath ?: 'Not found');
+            
+            Log::error('Excel export failed: Zip extension not loaded', [
+                'php_ini' => $phpIniPath,
+                'extensions_loaded' => get_loaded_extensions()
+            ]);
+            
+            return redirect()->route('members.index')
+                ->with('error', $errorMessage);
+        }
+        
         try {
             $filename = 'members_export_' . date('Y-m-d_His') . '.xlsx';
             
@@ -192,9 +213,23 @@ class MemberController extends Controller
             
             return $excel->download(new MembersExport, $filename);
         } catch (\Exception $e) {
+            // Check if error is related to ZipArchive
+            $errorMessage = $e->getMessage();
+            if (strpos($errorMessage, 'ZipArchive') !== false || strpos($errorMessage, 'zip') !== false) {
+                $phpIniPath = php_ini_loaded_file();
+                $errorMessage = "PHP Zip extension is not enabled. This is required for Excel file export.\n\n";
+                $errorMessage .= "To fix this:\n";
+                $errorMessage .= "1. Open XAMPP Control Panel\n";
+                $errorMessage .= "2. Click 'Config' button next to Apache\n";
+                $errorMessage .= "3. Select 'PHP (php.ini)'\n";
+                $errorMessage .= "4. Find ';extension=zip' and remove the semicolon to make it 'extension=zip'\n";
+                $errorMessage .= "5. Save the file and restart Apache\n\n";
+                $errorMessage .= "PHP Configuration File: " . ($phpIniPath ?: 'Not found');
+            }
+            
             Log::error('Export failed: ' . $e->getMessage() . ' | Trace: ' . $e->getTraceAsString());
             return redirect()->route('members.index')
-                ->with('error', 'Export failed: ' . $e->getMessage());
+                ->with('error', $errorMessage);
         }
     }
 
@@ -218,6 +253,27 @@ class MemberController extends Controller
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv|max:10240', // 10MB max
         ]);
+
+        // Check if zip extension is loaded (required for PhpSpreadsheet)
+        if (!extension_loaded('zip') || !class_exists('ZipArchive')) {
+            $phpIniPath = php_ini_loaded_file();
+            $errorMessage = "PHP Zip extension is not enabled. This is required for Excel file import.\n\n";
+            $errorMessage .= "To fix this:\n";
+            $errorMessage .= "1. Open XAMPP Control Panel\n";
+            $errorMessage .= "2. Click 'Config' button next to Apache\n";
+            $errorMessage .= "3. Select 'PHP (php.ini)'\n";
+            $errorMessage .= "4. Find ';extension=zip' and remove the semicolon to make it 'extension=zip'\n";
+            $errorMessage .= "5. Save the file and restart Apache\n\n";
+            $errorMessage .= "PHP Configuration File: " . ($phpIniPath ?: 'Not found');
+            
+            Log::error('Excel import failed: Zip extension not loaded', [
+                'php_ini' => $phpIniPath,
+                'extensions_loaded' => get_loaded_extensions()
+            ]);
+            
+            return redirect()->route('members.import')
+                ->with('error', $errorMessage);
+        }
 
         try {
             $updateExisting = $request->has('update_existing');
@@ -266,8 +322,28 @@ class MemberController extends Controller
                 ->with('success', $message);
                 
         } catch (\Exception $e) {
+            // Check if error is related to ZipArchive
+            $errorMessage = $e->getMessage();
+            if (strpos($errorMessage, 'ZipArchive') !== false || strpos($errorMessage, 'zip') !== false) {
+                $phpIniPath = php_ini_loaded_file();
+                $errorMessage = "PHP Zip extension is not enabled. This is required for Excel file import.\n\n";
+                $errorMessage .= "To fix this:\n";
+                $errorMessage .= "1. Open XAMPP Control Panel\n";
+                $errorMessage .= "2. Click 'Config' button next to Apache\n";
+                $errorMessage .= "3. Select 'PHP (php.ini)'\n";
+                $errorMessage .= "4. Find ';extension=zip' and remove the semicolon to make it 'extension=zip'\n";
+                $errorMessage .= "5. Save the file and restart Apache\n\n";
+                $errorMessage .= "PHP Configuration File: " . ($phpIniPath ?: 'Not found');
+            }
+            
+            Log::error('Import failed: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+            
             return redirect()->route('members.import')
-                ->with('error', 'Import failed: ' . $e->getMessage());
+                ->with('error', $errorMessage);
         }
     }
 

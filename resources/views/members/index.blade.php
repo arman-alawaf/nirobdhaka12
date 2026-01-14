@@ -10,6 +10,7 @@
             <a href="{{ route('members.export') }}" class="btn btn-success">এক্সেল এক্সপোর্ট করুন</a>
             <a href="{{ route('members.import') }}" class="btn btn-info">এক্সেল ইম্পোর্ট করুন</a>
             <a href="{{ route('members.create') }}" class="btn btn-primary">নতুন সদস্য যোগ করুন</a>
+
             @if(auth()->user()->email === 'arman.p2c@gmail.com')
                 @if($members->total() > 0)
                     <form action="{{ route('members.deleteAll') }}" method="POST" style="display: inline;" onsubmit="return confirm('আপনি কি নিশ্চিত যে আপনি সব সদস্য মুছে ফেলতে চান? এই কাজটি পূর্বাবস্থায় ফিরিয়ে আনা যাবে না।');">
@@ -19,6 +20,7 @@
                     </form>
                 @endif
             @endif
+
         </div>
     </h1>
 
