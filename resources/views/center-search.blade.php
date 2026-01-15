@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
+
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -1013,6 +1014,7 @@
             }
         }
     </style>
+
 </head>
 <body>
     <!-- Premium Voter Campaign Section -->
@@ -1114,7 +1116,7 @@
         </div>
         
         <!-- PDF List Section -->
-        <div class="pdf-list-section">
+        <div class="pdf-list-section" style="display: none;">
             <h2 class="section-title">
                 <i class="bi bi-file-pdf me-2"></i>সমস্ত PDF ফাইল
             </h2>
@@ -1143,16 +1145,17 @@
                 <div class="modal-body">
                     <div id="pdfViewer"></div>
                 </div>
+
                 <div class="pdf-controls">
-                    <button id="prevPage" class="btn btn-sm">
+                    {{-- <button id="prevPage" class="btn btn-sm">
                         <i class="bi bi-chevron-left"></i> পূর্ববর্তী
-                    </button>
+                    </button> --}}
                     <span>
                         পাতা: <input type="number" id="pageNum" value="1" min="1"> / <span id="pageCount">0</span>
                     </span>
-                    <button id="nextPage" class="btn btn-sm">
+                    {{-- <button id="nextPage" class="btn btn-sm">
                         পরবর্তী <i class="bi bi-chevron-right"></i>
-                    </button>
+                    </button> --}}
                     <button id="zoomOut" class="btn btn-sm">
                         <i class="bi bi-zoom-out"></i>
                     </button>
@@ -1161,6 +1164,7 @@
                         <i class="bi bi-zoom-in"></i>
                     </button>
                 </div>
+
             </div>
         </div>
     </div>
@@ -1702,7 +1706,7 @@
                     // Add border for better visibility
                     context.globalAlpha = 0.4;
                     context.strokeStyle = '#7df865'; // Same color as fill
-                    context.lineWidth = 5;
+                    context.lineWidth = 10;
                     highlightRects.forEach(rect => {
                         context.strokeRect(rect.x, rect.y, rect.width, rect.height);
                     });
