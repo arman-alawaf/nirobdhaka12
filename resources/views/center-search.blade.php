@@ -1486,21 +1486,31 @@
                 const page = await pdfDoc.getPage(pageNum);
                 const viewport = page.getViewport({ scale: scale });
                 
+                // Create main canvas for display
                 const canvas = document.createElement('canvas');
                 const context = canvas.getContext('2d');
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
                 
+                // Create a temporary canvas for the original render
+                const tempCanvas = document.createElement('canvas');
+                const tempContext = tempCanvas.getContext('2d');
+                tempCanvas.height = viewport.height;
+                tempCanvas.width = viewport.width;
+                
                 const renderContext = {
-                    canvasContext: context,
+                    canvasContext: tempContext,
                     viewport: viewport
                 };
                 
                 await page.render(renderContext).promise;
                 
-                // Highlight NID if it exists and we're on the page where it was found
+                // Copy the rendered page to main canvas
+                context.drawImage(tempCanvas, 0, 0);
+                
+                // Highlight NID and apply blur effect if it exists and we're on the page where it was found
                 if (searchedNid && currentPage === pageNum) {
-                    await highlightNidOnPage(page, context, viewport, searchedNid);
+                    await highlightNidOnPage(page, context, viewport, searchedNid, tempCanvas);
                 }
                 
                 const viewer = document.getElementById('pdfViewer');
@@ -1515,7 +1525,7 @@
         }
         
         // Highlight NID on the rendered page
-        async function highlightNidOnPage(page, context, viewport, nid) {
+        async function highlightNidOnPage(page, context, viewport, nid, originalCanvas) {
             try {
                 const textContent = await page.getTextContent();
                 // Normalize NID to English digits for consistent matching
@@ -1531,6 +1541,7 @@
                 
                 // Find text items that contain the NID
                 const highlightRects = [];
+                let nidItem = null; // Store the item containing NID for row expansion
                 
                 // First, try to find exact matches in individual text items
                 for (const item of textContent.items) {
@@ -1570,6 +1581,11 @@
                                     width: highlightWidth,
                                     height: itemHeight * scaleY
                                 });
+                                
+                                // Store the item for row expansion
+                                if (!nidItem) {
+                                    nidItem = item;
+                                }
                             }
                         }
                     }
@@ -1688,28 +1704,145 @@
                                     width: highlightWidth,
                                     height: itemHeight * scaleY
                                 });
+                                
+                                // Store the item for row expansion
+                                if (!nidItem) {
+                                    nidItem = startItem;
+                                }
                             }
                         }
                     }
                 }
                 
-                // Draw highlight rectangles
+                // Draw highlight rectangles and apply blur effect
                 if (highlightRects.length > 0) {
+                    // Expand highlight area to include the entire row
+                    let expandedRect = null;
+                    if (highlightRects.length > 0) {
+                        // Find the bounding box of all highlight rects
+                        let minX = Math.min(...highlightRects.map(r => r.x));
+                        let maxX = Math.max(...highlightRects.map(r => r.x + r.width));
+                        let minY = Math.min(...highlightRects.map(r => r.y));
+                        let maxY = Math.max(...highlightRects.map(r => r.y + r.height));
+                        
+                        // Find nearby text items that are likely part of the same voter record
+                        // Expand vertically to include only the specific row (not too much to avoid showing other voters)
+                        const rowExpansion = 40 * scaleY; // Smaller expansion - only the exact row
+                        const padding = 5 * scaleX; // Minimal horizontal padding
+                        
+                        // Calculate the exact row height
+                        const rowHeight = maxY - minY;
+                        
+                        expandedRect = {
+                            x: 0, // Full width
+                            y: Math.max(0, minY - rowExpansion),
+                            width: viewport.width, // Full page width
+                            height: Math.min(viewport.height - (minY - rowExpansion), rowHeight + (rowExpansion * 2))
+                        };
+                        
+                        // Ensure the rectangle doesn't exceed viewport bounds
+                        if (expandedRect.y + expandedRect.height > viewport.height) {
+                            expandedRect.height = viewport.height - expandedRect.y;
+                        }
+                        
+                        // Make sure we don't show too much - cap the height
+                        const maxRowHeight = 120 * scaleY; // Maximum row height to show
+                        if (expandedRect.height > maxRowHeight) {
+                            expandedRect.height = maxRowHeight;
+                            // Center it around the NID
+                            expandedRect.y = Math.max(0, (minY + maxY) / 2 - maxRowHeight / 2);
+                        }
+                    }
+                    
+                    // Apply blur/dim effect to everything except the highlight area
+                    if (expandedRect && originalCanvas) {
+                        // Create a heavily blurred and darkened version of the entire canvas
+                        const blurCanvas = document.createElement('canvas');
+                        blurCanvas.width = viewport.width;
+                        blurCanvas.height = viewport.height;
+                        const blurContext = blurCanvas.getContext('2d');
+                        
+                        // Draw original to blur canvas
+                        blurContext.drawImage(originalCanvas, 0, 0);
+                        
+                        // Apply extreme blur by downscaling and upscaling multiple times
+                        let tempCanvas = document.createElement('canvas');
+                        tempCanvas.width = viewport.width * 0.1; // Very heavy blur
+                        tempCanvas.height = viewport.height * 0.1;
+                        let tempContext = tempCanvas.getContext('2d');
+                        
+                        // First blur pass - extreme downscale
+                        tempContext.drawImage(blurCanvas, 0, 0, tempCanvas.width, tempCanvas.height);
+                        
+                        // Second blur pass - even more extreme
+                        const tempCanvas2 = document.createElement('canvas');
+                        tempCanvas2.width = tempCanvas.width * 0.5;
+                        tempCanvas2.height = tempCanvas.height * 0.5;
+                        const tempContext2 = tempCanvas2.getContext('2d');
+                        tempContext2.drawImage(tempCanvas, 0, 0, tempCanvas2.width, tempCanvas2.height);
+                        
+                        // Upscale back with heavy blur
+                        blurContext.clearRect(0, 0, blurCanvas.width, blurCanvas.height);
+                        blurContext.imageSmoothingEnabled = true;
+                        blurContext.imageSmoothingQuality = 'low';
+                        blurContext.drawImage(tempCanvas2, 0, 0, viewport.width, viewport.height);
+                        
+                        // Apply very dark overlay on top of blurred image (almost black)
+                        blurContext.save();
+                        blurContext.globalAlpha = 0.95;
+                        blurContext.fillStyle = 'rgba(0, 0, 0, 0.98)'; // Almost completely black
+                        blurContext.fillRect(0, 0, viewport.width, viewport.height);
+                        blurContext.restore();
+                        
+                        // Draw the blurred/darkened version to main canvas (covering everything)
+                        context.save();
+                        context.globalCompositeOperation = 'source-over';
+                        context.drawImage(blurCanvas, 0, 0);
+                        context.restore();
+                        
+                        // Now cut out the highlight area and draw clear version
+                        // Use destination-out to remove the blurred area where we want clear content
+                        context.save();
+                        context.globalCompositeOperation = 'destination-out';
+                        context.fillStyle = 'rgba(255, 255, 255, 1)';
+                        context.fillRect(expandedRect.x, expandedRect.y, expandedRect.width, expandedRect.height);
+                        context.restore();
+                        
+                        // Draw the clear area (highlighted section) from original canvas on top
+                        context.save();
+                        context.globalCompositeOperation = 'source-over';
+                        context.drawImage(
+                            originalCanvas,
+                            expandedRect.x, expandedRect.y, expandedRect.width, expandedRect.height,
+                            expandedRect.x, expandedRect.y, expandedRect.width, expandedRect.height
+                        );
+                        context.restore();
+                    }
+                    
+                    // Draw highlight rectangles on top
                     context.save();
                     context.globalAlpha = 0.4;
-                    context.fillStyle = '#7df865'; // Yellow highlight
+                    context.fillStyle = '#7df865'; // Green highlight
                     
                     highlightRects.forEach(rect => {
                         context.fillRect(rect.x, rect.y, rect.width, rect.height);
                     });
                     
                     // Add border for better visibility
-                    context.globalAlpha = 0.4;
-                    context.strokeStyle = '#7df865'; // Same color as fill
-                    context.lineWidth = 10;
+                    context.globalAlpha = 0.3;
+                    context.strokeStyle = '#16a34a'; // Green border
+                    context.lineWidth = 2;
                     highlightRects.forEach(rect => {
                         context.strokeRect(rect.x, rect.y, rect.width, rect.height);
                     });
+                    
+                    // Draw border around expanded area
+                    if (expandedRect) {
+                        context.globalAlpha = 0.3;
+                        context.strokeStyle = '#16a34a';
+                        context.lineWidth = 2;
+                        context.strokeRect(expandedRect.x, expandedRect.y, expandedRect.width, expandedRect.height);
+                    }
                     
                     context.restore();
                 }
@@ -1721,19 +1854,25 @@
 
         
         // PDF navigation controls
-        document.getElementById('prevPage').addEventListener('click', function() {
-            if (currentPage > 1) {
-                currentPage--;
-                renderPage(currentPage);
-            }
-        });
+        const prevPageBtn = document.getElementById('prevPage');
+        if (prevPageBtn) {
+            prevPageBtn.addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderPage(currentPage);
+                }
+            });
+        }
         
-        document.getElementById('nextPage').addEventListener('click', function() {
-            if (pdfDoc && currentPage < pdfDoc.numPages) {
-                currentPage++;
-                renderPage(currentPage);
-            }
-        });
+        const nextPageBtn = document.getElementById('nextPage');
+        if (nextPageBtn) {
+            nextPageBtn.addEventListener('click', function() {
+                if (pdfDoc && currentPage < pdfDoc.numPages) {
+                    currentPage++;
+                    renderPage(currentPage);
+                }
+            });
+        }
         
         document.getElementById('pageNum').addEventListener('change', function() {
             const page = parseInt(this.value);
