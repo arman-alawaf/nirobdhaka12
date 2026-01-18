@@ -1078,10 +1078,444 @@
     }
   </style>
 
+  <!-- Campaign Modal Styles -->
+  <style>
+    /* Campaign Modal Styles */
+    .campaign-modal .modal-dialog {
+      max-width: 600px;
+      margin: 1.75rem auto;
+    }
+
+    .campaign-modal .modal-content {
+      border: none;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .campaign-modal .modal-header {
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 50%, #166534 100%);
+      padding: 0;
+      border: none;
+      position: relative;
+      overflow: hidden;
+      min-height: 200px;
+    }
+
+    .campaign-modal .modal-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      animation: pulse-bg 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-bg {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    .campaign-header-content {
+      position: relative;
+      z-index: 2;
+      padding: 2rem 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .campaign-football-icon {
+      font-size: 4rem;
+      animation: footballSpin 3s linear infinite, footballBounce 2s ease-in-out infinite;
+      display: inline-block;
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+      margin-bottom: 1rem;
+    }
+
+    @keyframes footballSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes footballBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .campaign-title {
+      color: #fff;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      line-height: 1.3;
+    }
+
+    .campaign-subtitle {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 1.1rem;
+      margin-bottom: 0;
+      font-weight: 500;
+    }
+
+    .campaign-modal .modal-body {
+      padding: 2rem;
+      background: #fff;
+    }
+
+    .campaign-content {
+      text-align: center;
+    }
+
+    .campaign-message {
+      font-size: 1.1rem;
+      color: #495057;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .campaign-highlight {
+      color: #16a34a;
+      font-weight: 700;
+    }
+
+    .campaign-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .campaign-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: #f8f9fa;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .campaign-feature:hover {
+      background: #e9ecef;
+      transform: translateX(5px);
+    }
+
+    .campaign-feature-icon {
+      width: 35px;
+      height: 35px;
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .campaign-feature-text {
+      color: #212529;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .campaign-cta {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 2px dashed #dee2e6;
+    }
+
+    .btn-campaign-primary {
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      border: none;
+      color: #fff;
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      box-shadow: 0 8px 25px rgba(22, 163, 74, 0.4);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-campaign-primary::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn-campaign-primary:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn-campaign-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(22, 163, 74, 0.5);
+      color: #fff;
+    }
+
+    .btn-campaign-primary:active {
+      transform: translateY(-1px);
+    }
+
+    .btn-campaign-primary span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-campaign-secondary {
+      background: transparent;
+      border: 2px solid #6c757d;
+      color: #6c757d;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-campaign-secondary:hover {
+      background: #6c757d;
+      color: #fff;
+      border-color: #6c757d;
+      transform: translateY(-2px);
+    }
+
+    .campaign-modal .modal-footer {
+      background: #f8f9fa;
+      border-top: 1px solid #dee2e6;
+      padding: 1rem 2rem;
+      border-radius: 0 0 20px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .campaign-election-date {
+      background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+      padding: 1rem;
+      border-radius: 15px;
+      margin: 1rem 0;
+      border-left: 4px solid #ffc107;
+    }
+
+    .campaign-election-date-text {
+      color: #856404;
+      font-weight: 600;
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    /* Decorative Elements */
+    .campaign-decorative-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .decorative-shape {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .shape-1 {
+      width: 100px;
+      height: 100px;
+      top: -30px;
+      right: -30px;
+      animation: floatShape 6s ease-in-out infinite;
+    }
+
+    .shape-2 {
+      width: 60px;
+      height: 60px;
+      bottom: -20px;
+      left: -20px;
+      animation: floatShape 8s ease-in-out infinite reverse;
+    }
+
+    @keyframes floatShape {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(20px, 20px) rotate(180deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .campaign-modal .modal-dialog {
+        max-width: 95%;
+        margin: 1rem auto;
+      }
+
+      .campaign-header-content {
+        padding: 1.5rem 1rem 1rem;
+      }
+
+      .campaign-football-icon {
+        font-size: 3rem;
+      }
+
+      .campaign-title {
+        font-size: 1.4rem;
+      }
+
+      .campaign-subtitle {
+        font-size: 1rem;
+      }
+
+      .campaign-modal .modal-body {
+        padding: 1.5rem;
+      }
+
+      .campaign-features {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      .campaign-message {
+        font-size: 1rem;
+      }
+
+      .btn-campaign-primary {
+        padding: 0.875rem 2rem;
+        font-size: 1rem;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .btn-campaign-secondary {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .campaign-modal .modal-footer {
+        flex-direction: column;
+        padding: 1rem;
+      }
+    }
+
+    /* Fade in animation */
+    .campaign-modal.show .modal-dialog {
+      animation: modalFadeIn 0.5s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+  </style>
+
 </head>
 
 <body class="index-page">
   
+<!-- Campaign Modal -->
+<div class="modal fade campaign-modal" id="campaignModal" tabindex="-1" aria-labelledby="campaignModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="campaign-decorative-shapes">
+          <div class="decorative-shape shape-1"></div>
+          <div class="decorative-shape shape-2"></div>
+        </div>
+        <div class="campaign-header-content">
+          <div class="campaign-football-icon">⚽</div>
+          <h2 class="campaign-title" id="campaignModalLabel">ফুটবল প্রতীকে ভোট দিন</h2>
+          <p class="campaign-subtitle">⚽ সাইফুল আলম নীরব - ঢাকা ১২</p>
+        </div>
+        <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close" style="z-index: 3; filter: brightness(0) invert(1);"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="campaign-content">
+          <p class="campaign-message">
+            এলাকার উন্নয়ন, জনগণের কল্যাণ ও সমৃদ্ধির জন্য <span class="campaign-highlight" translate="no">সাইফুল আলম নীরব</span>-কে ফুটবল প্রতীকে ভোট দিন।
+          </p>
+
+          <div class="campaign-election-date">
+            <p class="campaign-election-date-text mb-0">
+              <i class="bi bi-calendar-check me-2"></i>
+              নির্বাচনের তারিখ: <strong>১২ ফেব্রুয়ারি ২০২৬</strong>
+            </p>
+          </div>
+
+          <!-- <div class="campaign-features">
+            <div class="campaign-feature">
+              <div class="campaign-feature-icon">
+                <i class="bi bi-building"></i>
+              </div>
+              <span class="campaign-feature-text">অবকাঠামো উন্নয়ন</span>
+            </div>
+            <div class="campaign-feature">
+              <div class="campaign-feature-icon">
+                <i class="bi bi-hospital"></i>
+              </div>
+              <span class="campaign-feature-text">স্বাস্থ্যসেবা</span>
+            </div>
+            <div class="campaign-feature">
+              <div class="campaign-feature-icon">
+                <i class="bi bi-book"></i>
+              </div>
+              <span class="campaign-feature-text">শিক্ষা উন্নয়ন</span>
+            </div>
+            <div class="campaign-feature">
+              <div class="campaign-feature-icon">
+                <i class="bi bi-people"></i>
+              </div>
+              <span class="campaign-feature-text">যুব উন্নয়ন</span>
+            </div>
+          </div> -->
+
+          <div class="campaign-cta">
+            <a href="{{url('/center-search')}}" class="btn-campaign-primary">
+              <span>⚽ কেন্দ্র খুঁজুন</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-campaign-secondary" data-bs-dismiss="modal">
+          <i class="bi bi-x-circle me-1"></i>
+          পরে দেখা যাবে
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
@@ -1969,6 +2403,18 @@
   <script>
     // Wait for DOM to be fully loaded
     document.addEventListener('DOMContentLoaded', function() {
+      // Auto-open Campaign Modal on page load
+      setTimeout(function() {
+        const campaignModalEl = document.getElementById('campaignModal');
+        if (campaignModalEl) {
+          const campaignModal = new bootstrap.Modal(campaignModalEl, {
+            backdrop: 'static',
+            keyboard: false
+          });
+          campaignModal.show();
+        }
+      }, 500); // 500ms delay for smooth page load
+      
       // Set up CSRF token for AJAX requests
       const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
       
