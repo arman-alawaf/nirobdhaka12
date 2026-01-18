@@ -1169,6 +1169,29 @@
       text-align: center;
     }
 
+    .campaign-image-container {
+      margin: -1rem 0 1.5rem;
+      padding: 0 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .campaign-image {
+      max-width: 200px;
+      width: 100%;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      border: 3px solid #16a34a;
+    }
+
+    .campaign-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 40px rgba(22, 163, 74, 0.3);
+    }
+
     .campaign-message {
       font-size: 1.1rem;
       color: #495057;
@@ -1401,6 +1424,15 @@
         font-size: 1rem;
       }
 
+      .campaign-image-container {
+        margin: -1rem 0 1rem;
+      }
+
+      .campaign-image {
+        max-width: 150px;
+        border-width: 2px;
+      }
+
       .btn-campaign-primary {
         padding: 0.875rem 2rem;
         font-size: 1rem;
@@ -1459,6 +1491,9 @@
 
       <div class="modal-body">
         <div class="campaign-content">
+          <div class="campaign-image-container">
+            <img src="assets/img/nirobArt.png" alt="সাইফুল আলম নীরব - ঢাকা ১২ এলাকার প্রার্থী" class="campaign-image">
+          </div>
           <p class="campaign-message">
             এলাকার উন্নয়ন, জনগণের কল্যাণ ও সমৃদ্ধির জন্য <span class="campaign-highlight" translate="no">সাইফুল আলম নীরব</span>-কে ফুটবল প্রতীকে ভোট দিন।
           </p>
