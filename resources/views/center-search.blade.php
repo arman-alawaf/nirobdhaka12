@@ -1135,8 +1135,9 @@
     <div class="modal fade pdf-modal" id="pdfViewerModal" tabindex="-1" aria-labelledby="pdfViewerModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
+                <h4 class="text-center mb-0">আপনার কেন্দ্র</h4>
                 <div class="modal-header">
-                    কেন্দ্র 
+                     
                     <h5 class="modal-title ms-2" id="pdfViewerModalLabel">
                         <i class="bi bi-file-pdf me-2"></i>PDF Viewer
                     </h5>

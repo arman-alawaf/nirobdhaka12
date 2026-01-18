@@ -1484,7 +1484,7 @@
         <div class="campaign-header-content">
           <div class="campaign-football-icon">⚽</div>
           <h2 class="campaign-title" id="campaignModalLabel">ফুটবল প্রতীকে ভোট দিন</h2>
-          <p class="campaign-subtitle">⚽ সাইফুল আলম নীরব - ঢাকা ১২</p>
+          <p class="campaign-subtitle" translate="no">⚽ সাইফুল আলম নীরব - ঢাকা ১২</p>
         </div>
         <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close" style="z-index: 3; filter: brightness(0) invert(1);"></button>
       </div>
@@ -1534,19 +1534,20 @@
 
           <div class="campaign-cta">
             <a href="{{url('/center-search')}}" class="btn-campaign-primary">
-              <span>⚽ কেন্দ্র খুঁজুন</span>
+              <span>আপনার কেন্দ্র খুঁজুন</span>
               <i class="bi bi-arrow-right"></i>
             </a>
           </div>
         </div>
       </div>
 
-      <div class="modal-footer">
+      {{-- <div class="modal-footer">
         <button type="button" class="btn-campaign-secondary" data-bs-dismiss="modal">
           <i class="bi bi-x-circle me-1"></i>
           পরে দেখা যাবে
         </button>
-      </div>
+      </div> --}}
+
     </div>
   </div>
 </div>
