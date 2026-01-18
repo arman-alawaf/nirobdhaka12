@@ -261,8 +261,8 @@
         
         /* PDF Modal Styles */
         .pdf-modal .modal-dialog {
-            max-width: 95%;
-            height: 95vh;
+            max-width: 50%;
+            height: 50vh;
         }
         
         .pdf-modal .modal-content {
@@ -1133,7 +1133,7 @@
     
     <!-- PDF Viewer Modal -->
     <div class="modal fade pdf-modal" id="pdfViewerModal" tabindex="-1" aria-labelledby="pdfViewerModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     কেন্দ্র 
