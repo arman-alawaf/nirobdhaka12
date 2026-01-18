@@ -13,15 +13,27 @@ class PdfSearchController extends Controller
      */
     public function getPdfList()
     {
+        // Increase memory limit before loading large JSON files
+        $currentMemoryLimit = ini_get('memory_limit');
+        $memoryLimitBytes = $this->convertToBytes($currentMemoryLimit);
+        
+        // If memory limit is less than 512MB, increase it
+        if ($memoryLimitBytes < 512 * 1024 * 1024) {
+            @ini_set('memory_limit', '512M');
+        }
+        
         $pdfPath = public_path('pdf');
         $pdfs = [];
         
-        // Load PDF titles from JSON file
+        // Load PDF titles from JSON file with memory-efficient approach
         $titlesPath = storage_path('app/pdf_titles.json');
         $titles = [];
         if (File::exists($titlesPath)) {
-            $titlesJson = File::get($titlesPath);
-            $titles = json_decode($titlesJson, true) ?? [];
+            $titlesJson = @file_get_contents($titlesPath);
+            if ($titlesJson !== false) {
+                $titles = json_decode($titlesJson, true) ?? [];
+                unset($titlesJson); // Free memory
+            }
         }
         
         if (File::exists($pdfPath)) {
@@ -71,6 +83,15 @@ class PdfSearchController extends Controller
      */
     public function searchNid(Request $request)
     {
+        // Increase memory limit before loading large JSON files
+        $currentMemoryLimit = ini_get('memory_limit');
+        $memoryLimitBytes = $this->convertToBytes($currentMemoryLimit);
+        
+        // If memory limit is less than 512MB, increase it
+        if ($memoryLimitBytes < 512 * 1024 * 1024) {
+            @ini_set('memory_limit', '512M');
+        }
+        
         $request->validate([
             'nid' => 'required|string',
         ]);
@@ -101,9 +122,20 @@ class PdfSearchController extends Controller
         }
 
         try {
-            // Read and decode index (should be very fast - JSON file read)
-            $indexJson = File::get($indexPath);
+            // Read and decode index with memory-efficient approach
+            // Use file_get_contents with error handling
+            $indexJson = @file_get_contents($indexPath);
+            
+            if ($indexJson === false) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'অনুসন্ধান করতে সমস্যা হয়েছে: Could not read index file. Please check file permissions.',
+                ], 500);
+            }
+            
+            // Clear memory by unsetting large string before decode
             $nidIndex = json_decode($indexJson, true);
+            unset($indexJson); // Free memory immediately
 
             if (json_last_error() !== JSON_ERROR_NONE) {
                 return response()->json([
@@ -121,12 +153,15 @@ class PdfSearchController extends Controller
                     $pdfFiles = [$pdfFiles];
                 }
 
-                // Load PDF titles
+                // Load PDF titles with memory-efficient approach
                 $titlesPath = storage_path('app/pdf_titles.json');
                 $titles = [];
                 if (File::exists($titlesPath)) {
-                    $titlesJson = File::get($titlesPath);
-                    $titles = json_decode($titlesJson, true) ?? [];
+                    $titlesJson = @file_get_contents($titlesPath);
+                    if ($titlesJson !== false) {
+                        $titles = json_decode($titlesJson, true) ?? [];
+                        unset($titlesJson); // Free memory
+                    }
                 }
 
                 // Prepare response with PDF information
@@ -166,11 +201,41 @@ class PdfSearchController extends Controller
                 ]);
             }
         } catch (\Exception $e) {
+            // Check if it's a memory error
+            $errorMessage = $e->getMessage();
+            if (strpos($errorMessage, 'memory') !== false || strpos($errorMessage, 'Memory') !== false) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'অনুসন্ধান করতে সমস্যা হয়েছে: Server memory limit exceeded. Please contact administrator to increase PHP memory limit.',
+                ], 500);
+            }
+            
             return response()->json([
                 'success' => false,
-                'message' => 'Error searching index: ' . $e->getMessage(),
+                'message' => 'অনুসন্ধান করতে সমস্যা হয়েছে: ' . $e->getMessage(),
             ], 500);
         }
+    }
+    
+    /**
+     * Convert memory limit string to bytes
+     */
+    private function convertToBytes($memoryLimit)
+    {
+        $memoryLimit = trim($memoryLimit);
+        $last = strtolower($memoryLimit[strlen($memoryLimit) - 1]);
+        $value = (int) $memoryLimit;
+        
+        switch ($last) {
+            case 'g':
+                $value *= 1024;
+            case 'm':
+                $value *= 1024;
+            case 'k':
+                $value *= 1024;
+        }
+        
+        return $value;
     }
 }
 
