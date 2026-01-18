@@ -12,6 +12,7 @@ Route::get('/', function () {
 });
 Route::get('/center-search', function () { return view('center-search'); });
 Route::get('/api/pdfs', [PdfSearchController::class, 'getPdfList'])->name('pdfs.list');
+Route::post('/api/pdfs/search', [PdfSearchController::class, 'searchNid'])->name('pdfs.search');
 
 // AJAX search route for modal
 Route::post('members/search', [MemberController::class, 'search'])->name('members.search');

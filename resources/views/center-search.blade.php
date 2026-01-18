@@ -1137,7 +1137,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     কেন্দ্র 
-                    <h5 class="modal-title" id="pdfViewerModalLabel">
+                    <h5 class="modal-title ms-2" id="pdfViewerModalLabel">
                         <i class="bi bi-file-pdf me-2"></i>PDF Viewer
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -1304,112 +1304,53 @@
             }
         }
         
-        // Search NID in all PDFs
+        // Search NID using backend index (FAST - no PDF parsing on search)
         async function searchNidInPdfs(nid) {
             const statusDiv = document.getElementById('searchStatus');
             const searchBtn = document.getElementById('searchBtn');
             
             statusDiv.style.display = 'block';
             statusDiv.className = 'search-status info';
-            statusDiv.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>অনুসন্ধান করা হচ্ছে... অনুগ্রহ করে অপেক্ষা করুন...';
+            statusDiv.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>অনুসন্ধান করা হচ্ছে...';
             
             try {
-                // Use stored pdfListData or fetch if not available
-                let pdfsToSearch = pdfListData;
-                if (!pdfsToSearch || pdfsToSearch.length === 0) {
-                    const response = await fetch('{{ route("pdfs.list") }}');
-                    const data = await response.json();
-                    if (data.success && data.pdfs) {
-                        pdfsToSearch = data.pdfs;
-                        pdfListData = data.pdfs; // Store for future use
-                    }
+                // Call backend search API (uses pre-built index - very fast)
+                const formData = new FormData();
+                formData.append('nid', nid);
+                
+                const response = await fetch('{{ route("pdfs.search") }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.message || 'Search failed');
                 }
                 
-                if (!pdfsToSearch || pdfsToSearch.length === 0) {
-                    statusDiv.className = 'search-status error';
-                    statusDiv.innerHTML = '<i class="bi bi-exclamation-triangle me-2"></i>কোন PDF ফাইল পাওয়া যায়নি';
-                    searchBtn.disabled = false;
-                    return;
-                }
-                
-                let found = false;
-                const searchTexts = ['ভোটার নং', 'ভোটার নম্বর', 'NID', 'nid', 'নং'];
-                
-                // Normalize the search NID to English digits for consistent searching
-                const normalizedNid = normalizeForSearch(nid);
-                const nidEnglish = banglaToEnglish(nid).replace(/\s/g, '');
-                const nidBangla = englishToBangla(nid).replace(/\s/g, '');
-                
-                // Create pattern that matches both English and Bangla versions
-                const nidPattern = new RegExp(normalizedNid.replace(/(\d)/g, '\\s*$1'), 'i');
-                
-                // Search in each PDF
-                for (let pdfIndex = 0; pdfIndex < pdfsToSearch.length; pdfIndex++) {
-                    const pdf = pdfsToSearch[pdfIndex];
-                    statusDiv.innerHTML = `<i class="bi bi-hourglass-split me-2"></i>অনুসন্ধান করা হচ্ছে... (${pdfIndex + 1}/${pdfsToSearch.length}): ${pdf.name}`;
+                if (data.success && data.found) {
+                    // NID found - open the PDF
+                    statusDiv.className = 'search-status success';
+                    statusDiv.innerHTML = `<i class="bi bi-check-circle me-2"></i>পাওয়া গেছে! ${data.message}`;
                     
-                    try {
-                        const loadingTask = pdfjsLib.getDocument({
-                            url: pdf.path,
-                            cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
-                            cMapPacked: true,
-                        });
-                        const pdfDocument = await loadingTask.promise;
-                        
-                        // Search through all pages
-                        for (let pageNum = 1; pageNum <= pdfDocument.numPages; pageNum++) {
-                            try {
-                                const page = await pdfDocument.getPage(pageNum);
-                                const textContent = await page.getTextContent();
-                                
-                                // Get all text from the page
-                                let pageText = '';
-                                for (const item of textContent.items) {
-                                    if (item.str) {
-                                        pageText += item.str + ' ';
-                                    }
-                                }
-                                
-                                // Normalize page text for searching (convert to English digits)
-                                const normalizedPageText = normalizeForSearch(pageText);
-                                const originalPageText = pageText.replace(/\s+/g, ' ').trim();
-                                
-                                // Check if page contains search text
-                                const hasSearchText = searchTexts.some(text => originalPageText.includes(text));
-                                
-                                // Check if normalized page text contains normalized NID
-                                // Also check for both English and Bangla versions in original text
-                                const hasNid = normalizedPageText.includes(normalizedNid) || 
-                                             originalPageText.includes(nidEnglish) || 
-                                             originalPageText.includes(nidBangla) ||
-                                             nidPattern.test(normalizedPageText);
-                                
-                                if (hasSearchText && hasNid) {
-                                    found = true;
-                                    const pdfTitle = pdf.title || pdf.name;
-                                    statusDiv.className = 'search-status success';
-                                    statusDiv.innerHTML = `<i class="bi bi-check-circle me-2"></i>পাওয়া গেছে! PDF: ${pdf.name}, পাতা: ${pageNum}`;
-                                    
-                                    // Open PDF at the found page with title and NID for highlighting
-                                    setTimeout(() => {
-                                        openPdfAtPage(pdf.path, pdf.name, pageNum, pdfTitle, nid);
-                                    }, 500);
-                                    
-                                    return; // Stop searching
-                                }
-                            } catch (pageError) {
-                                console.error(`Error reading page ${pageNum} of ${pdf.name}:`, pageError);
-                            }
-                        }
-                    } catch (error) {
-                        console.error(`Error searching in ${pdf.name}:`, error);
-                        // Continue with next PDF
-                    }
-                }
-                
-                if (!found) {
+                    // Use the first PDF found (or we can show multiple if needed)
+                    const pdf = data.pdfs[0];
+                    const pdfTitle = pdf.title || pdf.name;
+                    
+                    // Open PDF - we'll search for the NID on the client side for page number
+                    // But for now, open at page 1 and let highlighting find it
+                    setTimeout(() => {
+                        openPdfAtPage(pdf.path, pdf.name, 1, pdfTitle, nid);
+                    }, 500);
+                } else {
+                    // NID not found
                     statusDiv.className = 'search-status error';
-                    statusDiv.innerHTML = `<i class="bi bi-x-circle me-2"></i>এই NID (${nid}) কোন PDF-এ পাওয়া যায়নি। অনুগ্রহ করে NID নম্বরটি সঠিক কিনা যাচাই করুন।`;
+                    statusDiv.innerHTML = `<i class="bi bi-x-circle me-2"></i>${data.message || 'এই NID কোন PDF-এ পাওয়া যায়নি। অনুগ্রহ করে NID নম্বরটি সঠিক কিনা যাচাই করুন।'}`;
                 }
             } catch (error) {
                 console.error('Error searching PDFs:', error);
@@ -1417,7 +1358,6 @@
                 statusDiv.innerHTML = '<i class="bi bi-exclamation-triangle me-2"></i>অনুসন্ধান করতে সমস্যা হয়েছে: ' + error.message;
             } finally {
                 // Re-enable button after search completes
-                const searchBtn = document.getElementById('searchBtn');
                 if (searchBtn) {
                     searchBtn.disabled = false;
                 }
@@ -1470,12 +1410,66 @@
                 document.getElementById('pageCount').textContent = pdfDoc.numPages;
                 document.getElementById('pageNum').max = pdfDoc.numPages;
                 
+                // If NID is provided but pageNum is 1 (default), search for the NID across pages
+                if (nidToHighlight && pageNum === 1) {
+                    const foundPage = await findNidPage(nidToHighlight);
+                    if (foundPage) {
+                        currentPage = foundPage;
+                    }
+                }
+                
                 await renderPage(currentPage);
                 modal.show();
             } catch (error) {
                 console.error('Error loading PDF:', error);
                 alert('PDF লোড করতে সমস্যা হয়েছে');
             }
+        }
+        
+        // Find which page contains the NID (used after we know which PDF to open)
+        async function findNidPage(nid) {
+            if (!pdfDoc || !nid) return null;
+            
+            try {
+                const normalizedNid = normalizeForSearch(nid);
+                const nidEnglish = banglaToEnglish(nid).replace(/\s/g, '').toLowerCase();
+                const nidBangla = englishToBangla(nid).replace(/\s/g, '').toLowerCase();
+                
+                // Search through pages (max 100 pages to avoid too long delay)
+                const maxPages = Math.min(pdfDoc.numPages, 100);
+                
+                for (let pageNum = 1; pageNum <= maxPages; pageNum++) {
+                    try {
+                        const page = await pdfDoc.getPage(pageNum);
+                        const textContent = await page.getTextContent();
+                        
+                        // Get all text from the page
+                        let pageText = '';
+                        for (const item of textContent.items) {
+                            if (item.str) {
+                                pageText += item.str + ' ';
+                            }
+                        }
+                        
+                        // Normalize page text for searching
+                        const normalizedPageText = normalizeForSearch(pageText);
+                        const pageTextClean = pageText.replace(/\s/g, '').toLowerCase();
+                        
+                        // Check if page contains the NID
+                        if (normalizedPageText.includes(normalizedNid) || 
+                            pageTextClean.includes(nidEnglish) || 
+                            pageTextClean.includes(nidBangla)) {
+                            return pageNum;
+                        }
+                    } catch (pageError) {
+                        console.error(`Error reading page ${pageNum}:`, pageError);
+                    }
+                }
+            } catch (error) {
+                console.error('Error finding NID page:', error);
+            }
+            
+            return null; // Not found, will show page 1
         }
         
         // Render PDF page
